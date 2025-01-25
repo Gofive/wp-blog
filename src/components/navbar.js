@@ -1,27 +1,22 @@
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import ThemeSwitcher from './theme-switcher';
-import { FaGithub } from 'react-icons/fa';
-import { Separator } from './ui/separator';
-import Image from 'next/image';
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import ThemeSwitcher from "./theme-switcher";
+import { FaGithub } from "react-icons/fa";
+import { Separator } from "./ui/separator";
+import Image from "next/image";
 
 const mainNav = [
   {
-    title: 'Blog',
-    href: '/',
+    title: "Article",
+    href: "/",
   },
   {
-    title: 'About',
-    href: '/about',
-  },
-
-  {
-    title: 'Projects',
-    href: '/projects',
+    title: "Projects",
+    href: "/projects",
   },
   {
-    title: 'Contact',
-    href: '/contact',
+    title: "About",
+    href: "/about",
   },
 ];
 
@@ -29,21 +24,24 @@ export function MainNav({ className, ...props }) {
   return (
     <div
       className={cn(
-        'sticky border-b top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent',
+        "sticky border-b top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent",
         className
       )}
       {...props}
     >
-      <div className="max-w-6xl mx-auto">
-        <div className="py-4  border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
-          <div className="relative flex items-center">
-            <div className="w-8 h-8 relative">
+      <div className="max-w-5xl mx-auto">
+        <div className="border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
+          <div className="relative h-[56px] flex items-center">
+            <a href="/" className="w-8 h-8 relative">
               <Image src="/iwb.png" alt="Logo" fill sizes="32px" />
-            </div>
-            <div className="mx-3 hidden lg:flex w-[2.0625rem] overflow-hidden md:w-auto">
-              IWB BLOG
-            </div>
-            <div className="relative hidden lg:flex items-center ml-auto">
+            </a>
+            <a
+              href="/"
+              className="mx-3 font-semibold hidden md:flex overflow-hidden md:w-auto"
+            >
+              IWB
+            </a>
+            <div className="relative hidden md:flex items-center ml-auto">
               <div className="relative flex items-center">
                 <nav className="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
                   <ul className="flex space-x-8">
@@ -75,7 +73,7 @@ export function MainNav({ className, ...props }) {
             </div>
             <button
               type="button"
-              className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300"
+              className="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 md:hidden dark:text-slate-400 dark:hover:text-slate-300"
             >
               <span className="sr-only">Search</span>
               <svg
@@ -91,7 +89,7 @@ export function MainNav({ className, ...props }) {
                 <circle cx="11" cy="11" r="6"></circle>
               </svg>
             </button>
-            <div className="ml-2 -my-1 lg:hidden">
+            <div className="ml-2 -my-1 md:hidden">
               <button
                 type="button"
                 className="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
