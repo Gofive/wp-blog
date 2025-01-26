@@ -1,17 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
 
-export const Paginate = ({ currentPage, totalPages }) => {
+export const Paginate = ({ currentPage, totalPages, tag }) => {
   const router = useRouter();
   return (
     <div className="flex items-center justify-center pb-8 pt-6 w-full">
       <nav className="flex text-slate-700 dark:text-slate-100 text-lg">
         <button
-          className="disabled:text-gray-400 disabled:cursor-not-allowed"
+          className="disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
           disabled={currentPage <= 1}
-          onClick={() => router.push(`/?p=${Math.max(1, currentPage - 1)}`)}
+          onClick={() =>
+            router.push(
+              `/${tag ? "article" : ""}?p=${Math.max(1, currentPage - 1)}`
+            )
+          }
         >
           Prev
         </button>
@@ -19,10 +22,15 @@ export const Paginate = ({ currentPage, totalPages }) => {
           {currentPage} of {totalPages}
         </span>
         <button
-          className="disabled:text-gray-400 disabled:cursor-not-allowed"
+          className="disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer"
           disabled={currentPage >= totalPages}
           onClick={() =>
-            router.push(`/?p=${Math.max(currentPage + 1, totalPages)}`)
+            router.push(
+              `/${tag ? "article" : ""}?p=${Math.min(
+                currentPage + 1,
+                totalPages
+              )}`
+            )
           }
         >
           Next

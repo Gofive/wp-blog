@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import ThemeSwitcher from "./theme-switcher";
 import { FaGithub } from "react-icons/fa";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
+import NavItem from "./nav-item";
 
 const mainNav = [
   {
     title: "Article",
-    href: "/",
+    href: "/article",
   },
   {
     title: "Projects",
@@ -20,11 +20,11 @@ const mainNav = [
   },
 ];
 
-export function MainNav({ className, ...props }) {
+export default function MainNav({ className, ...props }) {
   return (
     <div
       className={cn(
-        "sticky border-b top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent",
+        "sticky border-b top-0 z-40 w-full backdrop-blur-sm flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent",
         className
       )}
       {...props}
@@ -33,13 +33,19 @@ export function MainNav({ className, ...props }) {
         <div className="border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
           <div className="relative h-[56px] flex items-center">
             <a href="/" className="w-8 h-8 relative">
-              <Image src="/iwb.png" alt="Logo" fill sizes="32px" />
+              <Image
+                className="relative"
+                src="/iwb.png"
+                alt="Logo"
+                fill
+                sizes="32px"
+              />
             </a>
             <a
               href="/"
               className="mx-3 font-semibold hidden md:flex overflow-hidden md:w-auto"
             >
-              IWB
+              IMWIND
             </a>
             <div className="relative hidden md:flex items-center ml-auto">
               <div className="relative flex items-center">
@@ -47,13 +53,7 @@ export function MainNav({ className, ...props }) {
                   <ul className="flex space-x-8">
                     {mainNav.map((item) => (
                       <li key={item.href}>
-                        <Link
-                          className="hover:text-violet-500 dark:hover:text-violet-400"
-                          href=""
-                          key={item.href}
-                        >
-                          {item.title}
-                        </Link>
+                        <NavItem item={item} />
                       </li>
                     ))}
                   </ul>

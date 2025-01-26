@@ -76,7 +76,7 @@ export default function Article({ children, toc }) {
   }, []);
 
   return (
-    <div className="relative mx-auto max-w-screen-xl px-4 py-10 md:flex md:flex-row md:py-10">
+    <div className="relative mx-auto max-w-(--breakpoint-xl) px-4 py-10 md:flex md:flex-row md:py-10">
       <div className="mt-4 w-full min-w-0 max-w-6xl px-1 md:px-6 ">
         <article className="markdown-body">{children}</article>
       </div>

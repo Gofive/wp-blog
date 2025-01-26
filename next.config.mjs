@@ -25,12 +25,6 @@ export default (phase, { defaultConfig }) => {
         },
       ],
     },
-    webpack(config, { isServer, nextRuntime }) {
-      if (nextRuntime === "nodejs") {
-        console.log("🚀 运行自定义构建函数...");
-      }
-      return config;
-    },
   };
   return nextConfig;
 };

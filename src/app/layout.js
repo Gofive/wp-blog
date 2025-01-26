@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 import IwbTheme from "../providers/theme";
-import { MainNav } from "@/components/navbar";
+import MainNav from "@/components/navbar";
 
 const geistSans = Geist({
   variable: "--font-noto-sans",
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
         <IwbTheme>
           <div>
             <MainNav />
-            <div className="max-w-5xl mx-auto">{children}</div>
+            <div className="max-w-5xl mx-auto p-4">{children}</div>
           </div>
         </IwbTheme>
       </body>

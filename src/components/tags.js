@@ -1,14 +1,17 @@
 // 列举所有的tags
 
 import tags from "~/blogs/tags.json";
-
-export default function Tags() {
+export default async function Tags({ tag }) {
   return (
-    <div className="p-4 mt-10 mx-8 bg-slate-100 shadow-md flex gap-4 w-60 font-semibold text-violet-500 flex-wrap">
+    <div className="shrink-0 sticky top-[80px] w-full p-4 mt-10 h-fit flex gap-4 md:w-60 font-semibold text-blue-500 flex-wrap">
       {tags.map((item) => (
-        <div key={item.tag} className="">
+        <a
+          href={`/article?tag=${item.tag}`}
+          key={item.tag}
+          className={`${tag === item.tag ? "text-violet-500 font-bold" : ""}`}
+        >
           {item.tag}({item.articles.length})
-        </div>
+        </a>
       ))}
     </div>
   );
