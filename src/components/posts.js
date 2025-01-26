@@ -34,7 +34,7 @@ export default function Posts({ p = 1, s = 10, posts, tag }) {
               {post.tags.map((tag) => (
                 <div
                   key={tag}
-                  className="px-2 py-0.5 text-sm bg-violet-500 text-zinc-100 rounded-md bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200"
+                  className="px-2 py-0.5 text-sm bg-violet-500 text-zinc-100 rounded-md  dark:bg-slate-600 dark:text-slate-200"
                 >
                   {tag}
                 </div>

@@ -17,8 +17,10 @@ import Article from "@/components/article";
 // Dynamic metadata
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const url = `https://imwind.cc/blog/${slug}`;
   return {
     title: decodeURIComponent(slug),
+    "og:url": url,
   };
 }
 /**
