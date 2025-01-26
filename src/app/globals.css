@@ -86,7 +86,7 @@
     --fgColor-attention: #d29922;
     --fgColor-danger: #f85149;
     --fgColor-done: #ab7df8;
-    --bgColor-default: #0d1117;
+    --bgColor-default: oklch(0.208 0.042 265.755);
     --bgColor-muted: #151b23;
     --bgColor-neutral-muted: #656c7633;
     --bgColor-attention-muted: #bb800926;
@@ -142,7 +142,7 @@
     --fgColor-attention: #9a6700;
     --fgColor-danger: #d1242f;
     --fgColor-done: #8250df;
-    --bgColor-default: #ffffff;
+    --bgColor-default: oklch(0.929 0.013 255.508);
     --bgColor-muted: #f6f8fa;
     --bgColor-neutral-muted: #818b981f;
     --bgColor-attention-muted: #fff8c5;
@@ -1334,8 +1334,7 @@
   min-width: 200px;
   max-width: 980px;
   margin: 0 auto;
-  padding: 45px;
-
+  padding: 40px 20px;
   a {
     display: inline-block;
   }
@@ -1381,4 +1380,8 @@
   left: 10px;
   top: 100px;
   font-size: 1rem;
+}
+
+.mobile-menu {
+  overflow: hidden;
 }

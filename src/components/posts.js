@@ -20,11 +20,11 @@ export default function Posts({ p = 1, s = 10, posts, tag }) {
   const displayedPosts = posts.slice(startIndex, startIndex + s);
 
   return (
-    <div className="p-8 bg-slate-100 dark:bg-slate-700 grow-1">
+    <div className="md:p-8 p-0 grow-1">
       {displayedPosts.map((post) => (
-        <div key={post.slug} className=" my-4">
-          <article className="markdown-body">
-            <h2 className="border-none!">
+        <div key={post.slug} className="my-4">
+          <article className="markdown-body rounded-lg">
+            <h2 className="!border-none">
               <a href={`/blog/${post.slug}`}>{post.title}</a>
             </h2>
             <div className="italic mb-6 text-slate-500 dark:text-slate-200 font-semibold w-full">

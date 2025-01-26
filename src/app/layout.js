@@ -4,6 +4,7 @@ import MainNav from "@/components/navbar";
 import Script from "next/script";
 
 import "./globals.css";
+import UpTop from "@/components/up-top";
 
 const geistSans = Geist({
   variable: "--font-noto-sans",
@@ -37,14 +38,13 @@ export default function RootLayout({ children }) {
         `}
       </Script>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-800 dark:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-800 dark:text-zinc-100`}
       >
         <IwbTheme>
-          <div>
-            <MainNav />
-            <div className="max-w-5xl mx-auto p-4">{children}</div>
-          </div>
+          <MainNav />
+          <div className="max-w-5xl mx-auto p-4">{children}</div>
         </IwbTheme>
+        <UpTop />
       </body>
     </html>
   );

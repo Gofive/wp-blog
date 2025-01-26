@@ -8,7 +8,7 @@ export default async function Article({ searchParams }) {
   const posts = await getArticles(tag);
 
   return (
-    <div className="flex bg-slate-100 dark:bg-slate-700">
+    <div className="flex flex-col md:flex-row">
       <Tags tag={tag} />
       <Posts posts={posts} tag={tag} p={p} s={s} />
     </div>
