@@ -12,42 +12,9 @@ import {
 import { LuSunMedium as Sun } from "react-icons/lu";
 import { LuMoonStar as MoonStar } from "react-icons/lu";
 import { HiMiniComputerDesktop as Monitor } from "react-icons/hi2";
+import { motion } from "motion/react";
 
 const themes = ["light", "dark", "system"];
-
-export default function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <div className="relative z-0 inline-grid grid-cols-3 gap-0.5 rounded-full bg-gray-950/5 p-0.75 text-gray-950 dark:bg-white/10 dark:text-white">
-      {themes.map((item) => (
-        <button
-          key={item}
-          className={`rounded-full p-1.5 sm:p-0 *:size-6 transition ${
-            item === theme
-              ? "text-gray-950 bg-white dark:bg-blue-500 ring ring-gray-950/10 dark:text-white dark:ring-transparent"
-              : ""
-          }`}
-          aria-label={`${item} theme`}
-          onClick={() => setTheme(item)}
-        >
-          {item === "system" && <Monitor size={20} />}
-          {item === "light" && <Sun size={20} />}
-          {item === "dark" && <MoonStar size={20} />}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 export function ThemeSwitcher() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -112,5 +79,50 @@ export function ThemeSwitcher() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+/**
+ * layout animation
+ */
+export function ThemeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <div className="flex space-x-1 bg-gray-200 dark:bg-slate-700 px-1.5 py-1 rounded-full">
+      {themes.map((item) => (
+        <button
+          key={item}
+          onClick={() => setTheme(item)}
+          className={`relative flex items-center justify-center cursor-pointer rounded-full h-8 w-8 px-1.5 py-1.5 text-sm font-medium text-slate-900 dark:text-zinc-100 outline-sky-400 transition focus-visible:outline-2`}
+          style={{
+            WebkitTapHighlightColor: "transparent",
+          }}
+        >
+          {theme === item && (
+            <motion.span
+              layoutId="bubble"
+              className={`${
+                resolvedTheme === "dark" ? "bg-blue-500" : "bg-white"
+              } absolute inset-0 z-10`}
+              style={{ borderRadius: 9999 }}
+              transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+            />
+          )}
+          {item === "system" && <Monitor className="z-20" size={20} />}
+          {item === "light" && <Sun className="z-20" size={20} />}
+          {item === "dark" && <MoonStar className="z-20" size={20} />}
+        </button>
+      ))}
+    </div>
   );
 }

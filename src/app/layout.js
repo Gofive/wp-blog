@@ -1,20 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import IwbTheme from "../providers/theme";
 import MainNav from "@/components/navbar";
 import Script from "next/script";
 
 import "./globals.css";
 import UpTop from "@/components/up-top";
-
-const geistSans = Geist({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-noto-sans-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "IMWIND",
@@ -38,7 +27,7 @@ export default function RootLayout({ children }) {
         `}
       </Script>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-slate-800 dark:text-zinc-100`}
+        className={`antialiased bg-white dark:bg-slate-800 dark:text-zinc-100`}
       >
         <IwbTheme>
           <MainNav />

@@ -10,7 +10,7 @@ export default async function Article({ searchParams }) {
   return (
     <div className="flex flex-col md:flex-row">
       <Tags tag={tag} />
-      <Posts posts={posts} tag={tag} p={p} s={s} />
+      <Posts posts={posts} article tag={tag} p={p} s={s} />
     </div>
   );
 }

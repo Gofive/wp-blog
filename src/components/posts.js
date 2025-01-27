@@ -7,13 +7,43 @@ import { redirect } from "next/navigation";
 
 dayjs.locale("en");
 
-export default function Posts({ p = 1, s = 10, posts, tag }) {
+export default function Posts({
+  p = 1,
+  s = 10,
+  posts,
+  article,
+  tag,
+  search,
+  q,
+}) {
   // 计算分页数据
   const totalPages = Math.ceil(posts.length / s);
 
+  if (totalPages === 0) {
+    return <div className="p-10">No posts found...</div>;
+  }
+
   // 超出分页范围，重定向
   if (p < 1 || p > totalPages) {
-    redirect(`/?p=${Math.max(1, Math.min(totalPages, p))}`);
+    if (search) {
+      const searchText = `q=${q}&`;
+      redirect(
+        `/search?${q ? searchText : ""}p=${Math.max(
+          1,
+          Math.min(totalPages, p)
+        )}`
+      );
+    } else if (article) {
+      const tagText = `tag=${tag}&`;
+      redirect(
+        `/article?${tag ? tagText : ""}p=${Math.max(
+          1,
+          Math.min(totalPages, p)
+        )}`
+      );
+    } else {
+      redirect(`/?p=${Math.max(1, Math.min(totalPages, p))}`);
+    }
   }
 
   const startIndex = (p - 1) * s;
@@ -50,7 +80,14 @@ export default function Posts({ p = 1, s = 10, posts, tag }) {
           </article>
         </div>
       ))}
-      <Paginate currentPage={p} totalPages={totalPages} tag={tag} />
+      <Paginate
+        currentPage={p}
+        totalPages={totalPages}
+        tag={tag}
+        search={search}
+        q={q}
+        article={article}
+      />
     </div>
   );
 }

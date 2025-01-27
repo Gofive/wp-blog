@@ -1,16 +1,19 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import ThemeToggle, { ThemeSwitcher } from "./theme-switcher";
+import { ThemeToggle, ThemeSwitcher } from "./theme-switcher";
 import { FaGithub } from "react-icons/fa";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
 import NavItem from "./nav-item";
-import { Search, Menu } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
-import MenuToggle from "./menu-item";
+import MenuToggle from "./menu-toggle";
+import { useAtom } from "jotai";
+import { toggleMenuAtom } from "@/lib/atom-state";
+import { redirect } from "next/navigation";
 
 const mainNav = [
   {
@@ -29,9 +32,11 @@ const mainNav = [
 
 export default function MainNav({ className, ...props }) {
   const [open, setOpen] = useState(false);
+  const [_, setIsOpen] = useAtom(toggleMenuAtom);
 
   const handleClick = () => {
     setOpen(!open);
+    setIsOpen(false);
     document.getElementsByTagName("body")[0].classList.toggle("mobile-menu");
   };
 
@@ -96,9 +101,10 @@ export default function MainNav({ className, ...props }) {
               </div>
               <button
                 type="button"
+                onClick={() => redirect("/search")}
                 className="cursor-pointer ml-auto md:ml-4 text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
               >
-                <Search />
+                <Search strokeWidth={2.5} />
               </button>
               <div className="relative w-10 text-slate-500 h-10 ml-2 md:hidden flex items-center justify-center">
                 <MenuToggle size={32} onClick={handleClick}></MenuToggle>
@@ -138,7 +144,6 @@ export default function MainNav({ className, ...props }) {
                 size={32}
               />
             </Link>
-
             <ThemeToggle />
           </div>
         </motion.div>
