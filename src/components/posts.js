@@ -20,7 +20,7 @@ export default function Posts({
   const totalPages = Math.ceil(posts.length / s);
 
   if (totalPages === 0) {
-    return <div className="p-10">No posts found...</div>;
+    return <div className="">No posts found...</div>;
   }
 
   // 超出分页范围，重定向
@@ -50,7 +50,7 @@ export default function Posts({
   const displayedPosts = posts.slice(startIndex, startIndex + s);
 
   return (
-    <div className="md:p-8 p-0 grow-1">
+    <div className="p-0 grow-1">
       {displayedPosts.map((post) => (
         <div key={post.slug} className="my-4">
           <article className="markdown-body rounded-lg">

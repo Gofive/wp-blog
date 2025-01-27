@@ -101,7 +101,14 @@ export default function MainNav({ className, ...props }) {
               </div>
               <button
                 type="button"
-                onClick={() => redirect("/search")}
+                onClick={() => {
+                  setIsOpen(false);
+                  setOpen(false);
+                  document
+                    .getElementsByTagName("body")[0]
+                    .classList.remove("mobile-menu");
+                  redirect("/search");
+                }}
                 className="cursor-pointer ml-auto md:ml-4 text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
               >
                 <Search strokeWidth={2.5} />

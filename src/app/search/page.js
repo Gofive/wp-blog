@@ -20,8 +20,8 @@ export default async function Search({ searchParams }) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <form className="max-w-xl ml-10">
+    <div className="max-w-3xl md:mx-auto">
+      <form className="max-w-xl sticky top-[57px] py-2 bg-white dark:bg-slate-800">
         <div className="relative flex items-center w-full">
           <SearchIcon className="absolute left-3 text-slate-500 dark:text-slate-200" />
           <input
