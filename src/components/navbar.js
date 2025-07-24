@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle, ThemeSwitcher } from "./theme-switcher";
 import { FaGithub } from "react-icons/fa";
 import { Separator } from "./ui/separator";
-import Image from "next/image";
+import OptimizedImage from "./optimized-image";
 import NavItem from "./nav-item";
 import { Search } from "lucide-react";
 import { useState } from "react";
@@ -53,12 +53,14 @@ export default function MainNav({ className, ...props }) {
           <div className="border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             <div className="relative h-[56px] flex items-center">
               <a href="/" className="w-8 h-8 relative">
-                <Image
+                <OptimizedImage
                   className="relative"
                   src="/iwb.png"
-                  alt="Logo"
-                  fill
+                  alt="IMWIND Logo"
+                  width={32}
+                  height={32}
                   sizes="32px"
+                  priority
                 />
               </a>
               <a

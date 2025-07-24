@@ -82,7 +82,7 @@ export default async function Blog({ params }) {
   const toc = await parseMarkdownWithToc(markdown);
 
   return (
-    <Article toc={toc}>
+    <Article toc={toc} title={decodedSlug}>
       <Markdown
         rehypePlugins={[rehypeRaw, rehypeSlug, rehypeStringify]}
         remarkPlugins={[
