@@ -1,8 +1,8 @@
 ---
 title: "React服务端组件深度解析"
 category: "Technology"
-date: "2025-01-23"
-tags: ["react", "server-components", "next.js", "ssr"]
+date: "2025-04-20"
+tags: ["React", "服务端组件", "Next.js", "SSR"]
 ---
 
 React Server Components (RSC) 是 React 18 引入的革命性特性，它重新定义了我们构建 React 应用的方式。
@@ -25,7 +25,7 @@ React Server Components 是一种新的组件类型，它们在服务器上运�
 async function BlogPost({ id }) {
   // 可以直接访问数据库
   const post = await db.posts.findById(id);
-  
+
   return (
     <article>
       <h1>{post.title}</h1>
@@ -50,22 +50,22 @@ RSC 通过在服务器上运行组件来解决这些问题：
 // 传统方式 - 需要 API 调用
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     fetch(`/api/users/${userId}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setUser);
   }, [userId]);
-  
+
   if (!user) return <div>Loading...</div>;
-  
+
   return <div>{user.name}</div>;
 }
 
 // RSC 方式 - 直接数据访问
 async function UserProfile({ userId }) {
   const user = await getUserById(userId);
-  
+
   return <div>{user.name}</div>;
 }
 ```
@@ -81,16 +81,16 @@ async function UserProfile({ userId }) {
 async function ServerComponent() {
   // ✅ 可以使用 async/await
   const data = await fetchData();
-  
+
   // ✅ 可以访问服务端 API
-  const fs = require('fs');
-  
+  const fs = require("fs");
+
   // ❌ 不能使用浏览器 API
   // const width = window.innerWidth; // 错误！
-  
+
   // ❌ 不能使用状态和生命周期
   // const [count, setCount] = useState(0); // 错误！
-  
+
   return <div>{data.title}</div>;
 }
 ```
@@ -98,23 +98,19 @@ async function ServerComponent() {
 ### 客户端组件特点
 
 ```jsx
-'use client'; // 明确标记为客户端组件
+"use client"; // 明确标记为客户端组件
 
 function ClientComponent() {
   // ✅ 可以使用状态和事件处理
   const [count, setCount] = useState(0);
-  
+
   // ✅ 可以使用浏览器 API
   const width = window.innerWidth;
-  
+
   // ❌ 不能直接访问服务端资源
   // const data = await db.query(); // 错误！
-  
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
 }
 ```
 
@@ -126,12 +122,12 @@ function ClientComponent() {
 // 博客文章列表
 async function BlogList() {
   const posts = await db.posts.findMany({
-    include: { author: true, tags: true }
+    include: { author: true, tags: true },
   });
-  
+
   return (
     <div>
-      {posts.map(post => (
+      {posts.map((post) => (
         <BlogCard key={post.id} post={post} />
       ))}
     </div>
@@ -141,9 +137,9 @@ async function BlogList() {
 // 单个博客卡片也是服务端组件
 async function BlogCard({ post }) {
   const commentsCount = await db.comments.count({
-    where: { postId: post.id }
+    where: { postId: post.id },
   });
-  
+
   return (
     <article>
       <h2>{post.title}</h2>
@@ -160,13 +156,13 @@ async function BlogCard({ post }) {
 ```jsx
 async function Dashboard({ userId }) {
   const user = await getCurrentUser(userId);
-  
+
   if (!user.isAdmin) {
     return <AccessDenied />;
   }
-  
+
   const stats = await getAdminStats();
-  
+
   return (
     <div>
       <h1>Admin Dashboard</h1>
@@ -184,8 +180,8 @@ async function WeatherWidget({ city }) {
   // 在服务端调用第三方 API，隐藏 API 密钥
   const weather = await fetch(
     `https://api.weather.com/v1/current?key=${process.env.WEATHER_API_KEY}&q=${city}`
-  ).then(res => res.json());
-  
+  ).then((res) => res.json());
+
   return (
     <div className="weather-card">
       <h3>{city}</h3>
@@ -205,7 +201,7 @@ RSC 的强大之处在于服务端和客户端组件的无缝组合：
 async function ProductPage({ productId }) {
   const product = await getProduct(productId);
   const reviews = await getReviews(productId);
-  
+
   return (
     <div>
       <ProductInfo product={product} />
@@ -216,19 +212,19 @@ async function ProductPage({ productId }) {
 }
 
 // 客户端组件
-'use client';
+("use client");
 function AddToCartButton({ productId }) {
   const [isAdding, setIsAdding] = useState(false);
-  
+
   const handleAddToCart = async () => {
     setIsAdding(true);
     await addToCart(productId);
     setIsAdding(false);
   };
-  
+
   return (
     <button onClick={handleAddToCart} disabled={isAdding}>
-      {isAdding ? 'Adding...' : 'Add to Cart'}
+      {isAdding ? "Adding..." : "Add to Cart"}
     </button>
   );
 }
@@ -239,17 +235,17 @@ function AddToCartButton({ productId }) {
 ### 1. 流式渲染
 
 ```jsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 async function ProductPage({ productId }) {
   return (
     <div>
       <ProductHeader productId={productId} />
-      
+
       <Suspense fallback={<ReviewsSkeleton />}>
         <ProductReviews productId={productId} />
       </Suspense>
-      
+
       <Suspense fallback={<RecommendationsSkeleton />}>
         <ProductRecommendations productId={productId} />
       </Suspense>
@@ -260,9 +256,9 @@ async function ProductPage({ productId }) {
 // 这个组件会并行加载，不会阻塞页面渲染
 async function ProductReviews({ productId }) {
   // 模拟慢查询
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const reviews = await getReviews(productId);
-  
+
   return <ReviewsList reviews={reviews} />;
 }
 ```
@@ -270,7 +266,7 @@ async function ProductReviews({ productId }) {
 ### 2. 智能缓存
 
 ```jsx
-import { cache } from 'react';
+import { cache } from "react";
 
 // 使用 React cache 避免重复请求
 const getUser = cache(async (userId) => {
@@ -285,11 +281,13 @@ async function UserProfile({ userId }) {
 async function UserPosts({ userId }) {
   const user = await getUser(userId); // 复用缓存
   const posts = await getUserPosts(userId);
-  
+
   return (
     <div>
       <h2>{user.name}'s Posts</h2>
-      {posts.map(post => <PostCard key={post.id} post={post} />)}
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
     </div>
   );
 }
@@ -303,7 +301,7 @@ Next.js 13+ 的 App Router 原生支持 RSC：
 // app/blog/page.js - 服务端组件
 async function BlogPage() {
   const posts = await getPosts();
-  
+
   return (
     <div>
       <h1>Blog</h1>
@@ -316,7 +314,7 @@ async function BlogPage() {
 // app/blog/[slug]/page.js - 动态路由
 async function BlogPost({ params }) {
   const post = await getPost(params.slug);
-  
+
   return (
     <article>
       <h1>{post.title}</h1>
@@ -329,7 +327,7 @@ async function BlogPost({ params }) {
 // 生成静态参数
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.map(post => ({ slug: post.slug }));
+  return posts.map((post) => ({ slug: post.slug }));
 }
 ```
 
@@ -341,7 +339,7 @@ export async function generateStaticParams() {
 // ✅ 好的设计 - 清晰的边界
 async function ShoppingCart() {
   const items = await getCartItems();
-  
+
   return (
     <div>
       <CartHeader itemCount={items.length} />
@@ -355,9 +353,11 @@ async function ShoppingCart() {
 async function ShoppingCart() {
   const [isOpen, setIsOpen] = useState(false); // 错误！服务端组件不能用状态
   const items = await getCartItems();
-  
+
   return (
-    <div onClick={() => setIsOpen(!isOpen)}> {/* 错误！服务端组件不能处理事件 */}
+    <div onClick={() => setIsOpen(!isOpen)}>
+      {" "}
+      {/* 错误！服务端组件不能处理事件 */}
       {/* ... */}
     </div>
   );
@@ -374,7 +374,7 @@ async function Dashboard() {
     getDashboardStats(),
     getNotifications()
   ]);
-  
+
   return (
     <div>
       <UserInfo user={user} />
@@ -389,7 +389,7 @@ async function Dashboard() {
   const user = await getCurrentUser();
   const stats = await getDashboardStats(); // 等待上一个完成
   const notifications = await getNotifications(); // 等待上一个完成
-  
+
   return (/* ... */);
 }
 ```
@@ -398,7 +398,7 @@ async function Dashboard() {
 
 ```jsx
 // app/error.js - 错误边界
-'use client';
+"use client";
 
 export default function Error({ error, reset }) {
   return (
@@ -415,7 +415,7 @@ async function UserProfile({ userId }) {
     const user = await getUser(userId);
     return <UserCard user={user} />;
   } catch (error) {
-    if (error.code === 'USER_NOT_FOUND') {
+    if (error.code === "USER_NOT_FOUND") {
       return <UserNotFound />;
     }
     throw error; // 让错误边界处理
@@ -433,10 +433,10 @@ React DevTools 现在支持 RSC，可以区分服务端和客户端组件：
 // 在组件中添加调试信息
 async function DebugComponent() {
   const data = await fetchData();
-  
+
   // 服务端日志
-  console.log('Server:', data);
-  
+  console.log("Server:", data);
+
   return (
     <div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
@@ -448,10 +448,10 @@ async function DebugComponent() {
 ### 2. 性能监控
 
 ```jsx
-import { unstable_trace as trace } from 'react';
+import { unstable_trace as trace } from "react";
 
 async function TrackedComponent() {
-  return trace('TrackedComponent', async () => {
+  return trace("TrackedComponent", async () => {
     const data = await expensiveOperation();
     return <div>{data}</div>;
   });
@@ -488,18 +488,30 @@ async function StaticHeader() {
 // 之前：客户端数据获取
 function UserList() {
   const [users, setUsers] = useState([]);
-  
+
   useEffect(() => {
     fetchUsers().then(setUsers);
   }, []);
-  
-  return <div>{users.map(user => <UserCard key={user.id} user={user} />)}</div>;
+
+  return (
+    <div>
+      {users.map((user) => (
+        <UserCard key={user.id} user={user} />
+      ))}
+    </div>
+  );
 }
 
 // 之后：服务端数据获取
 async function UserList() {
   const users = await getUsers();
-  return <div>{users.map(user => <UserCard key={user.id} user={user} />)}</div>;
+  return (
+    <div>
+      {users.map((user) => (
+        <UserCard key={user.id} user={user} />
+      ))}
+    </div>
+  );
 }
 ```
 

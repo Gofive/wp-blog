@@ -10,14 +10,17 @@ dayjs.locale("en");
 export default function Posts({
   p = 1,
   s = 10,
-  posts,
+  posts = [],
   article,
   tag,
   search,
   q,
 }) {
+  // 确保 posts 是数组
+  const postsArray = Array.isArray(posts) ? posts : [];
+
   // 计算分页数据
-  const totalPages = Math.ceil(posts.length / s);
+  const totalPages = Math.ceil(postsArray.length / s);
 
   if (totalPages === 0) {
     return <div className="">No posts found...</div>;
@@ -47,13 +50,13 @@ export default function Posts({
   }
 
   const startIndex = (p - 1) * s;
-  const displayedPosts = posts.slice(startIndex, startIndex + s);
+  const displayedPosts = postsArray.slice(startIndex, startIndex + s);
 
   return (
-    <div className="p-0 grow-1">
+    <div className="px-2 md:px-4 py-6 grow-1 max-w-4xl mx-auto">
       {displayedPosts.map((post) => (
-        <div key={post.slug} className="my-4">
-          <article className="markdown-body rounded-lg">
+        <div key={post.slug} className="my-6">
+          <article className="markdown-body rounded-lg p-6 bg-white dark:bg-slate-800 shadow-sm border border-gray-200 dark:border-slate-700">
             <h2 className="!border-none">
               <a href={`/blog/${post.slug}`}>{post.title}</a>
             </h2>

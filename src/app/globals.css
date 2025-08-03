@@ -1385,3 +1385,57 @@
 .mobile-menu {
   overflow: hidden;
 }
+
+/* 自定义代码字体样式 */
+.markdown-body code,
+.markdown-body pre,
+.markdown-body tt,
+.markdown-body kbd,
+.markdown-body samp {
+  font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+}
+
+/* 确保内联代码有更好的样式 */
+.markdown-body code:not(pre code) {
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background-color: var(--bgColor-neutral-muted);
+  border-radius: 3px;
+  border: 1px solid var(--borderColor-muted);
+}
+
+/* 代码块样式优化 */
+.markdown-body pre {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Mermaid 错误显示的代码块 */
+.mermaid-error pre {
+  font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+}
+
+/* 文章内容宽度优化 */
+.markdown-body {
+  max-width: none !important;
+  width: 100%;
+}
+
+/* 确保表格在大屏幕上有更好的显示 */
+.markdown-body table {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 代码块在大屏幕上的优化 */
+.markdown-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* 图片在大屏幕上的优化 */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+}

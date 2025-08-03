@@ -1,5 +1,3 @@
-"use server";
-
 import fs from "fs";
 import path from "path";
 import posts from "~/blogs/search-index.json";
@@ -8,6 +6,7 @@ import posts from "~/blogs/search-index.json";
 const BASE_DIR = path.join(process.cwd(), "blogs");
 
 export async function getBlog(slug) {
+  "use server";
   console.log(slug);
   const filePath = path.join(BASE_DIR, slug);
   // 读取每个 Markdown 文件的内容
@@ -20,6 +19,6 @@ export async function getBlog(slug) {
  * @param {string} tagName 要查询的标签
  * @returns {Array} 符合的文章列表 [{ title, slug }]
  */
-export async function getArticles(tag) {
+export function getArticles(tag) {
   return tag ? posts.filter((article) => article.tags.includes(tag)) : posts;
 }

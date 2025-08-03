@@ -49,7 +49,7 @@ export default function MainNav({ className, ...props }) {
         )}
         {...props}
       >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             <div className="relative h-[56px] flex items-center">
               <a href="/" className="w-8 h-8 relative">

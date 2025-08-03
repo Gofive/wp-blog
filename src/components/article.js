@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { debounce } from 'lodash'; // 导入 lodash 的 throttle 函数
-import { List } from 'lucide-react';
-import { Drawer } from 'vaul';
-import UpTop from './up-top';
+import { useEffect, useState } from "react";
+import { debounce } from "lodash"; // 导入 lodash 的 throttle 函数
+import { List } from "lucide-react";
+import { Drawer } from "vaul";
+import UpTop from "./up-top";
 
 export default function Article({ children, toc, title }) {
   const [activeId, setActiveId] = useState(null);
@@ -17,11 +17,11 @@ export default function Article({ children, toc, title }) {
       return;
     }
     const element = document.querySelector(decodeURIComponent(hash));
-    console.log('hash', hash);
+    console.log("hash", hash);
     if (element) {
       window.scrollTo({
         top: element.offsetTop,
-        behavior: 'instant',
+        behavior: "instant",
       });
     }
   }, []);
@@ -33,14 +33,14 @@ export default function Article({ children, toc, title }) {
       if (element) {
         window.scrollTo({
           top: element.offsetTop,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
 
@@ -73,21 +73,21 @@ export default function Article({ children, toc, title }) {
         }
       }
     }, 200);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [toc, title]);
 
   return (
-    <div className="relative mx-auto max-w-7xl flex flex-col md:flex-row gap-6">
-      <div className="mt-4 w-full min-w-0 flex-1 px-1 md:px-6">
-        <article className="markdown-body">
+    <div className="relative mx-auto max-w-[1400px] flex flex-col md:flex-row gap-8">
+      <div className="mt-4 w-full min-w-0 flex-1 px-2 md:px-8">
+        <article className="markdown-body max-w-none">
           <h1>{title}</h1>
           {children}
         </article>
       </div>
-      <div className="flex-col justify-between sticky top-[100px] md:order-last order-first w-full h-[calc(100vh-100px)] hidden md:w-64 shrink-0 md:flex">
+      <div className="flex-col justify-between sticky top-[100px] md:order-last order-first w-full h-[calc(100vh-100px)] hidden md:w-72 shrink-0 md:flex">
         {/* 目录区域 */}
         <nav className="p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm max-h-[calc(100vh-180px)] overflow-y-auto">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 border-b border-gray-200 dark:border-slate-600 pb-2">
@@ -101,8 +101,8 @@ export default function Article({ children, toc, title }) {
                 }}
                 className={`${
                   activeId === item.id
-                    ? 'text-blue-500 font-semibold bg-blue-50 dark:bg-blue-900/20'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400'
+                    ? "text-blue-500 font-semibold bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                 } text-sm transition-all cursor-pointer rounded px-2 py-1`}
                 key={index}
                 style={{ marginLeft: Math.max(0, (item.level - 2) * 12) }}
@@ -129,7 +129,7 @@ export default function Article({ children, toc, title }) {
           <Drawer.Content
             className="right-2 top-16 bottom-2 fixed z-10 outline-none max-w-[280px] w-[70%] flex"
             // The gap between the edge of the screen and the drawer is 8px in this case.
-            style={{ '--initial-transform': 'calc(100% + 8px)' }}
+            style={{ "--initial-transform": "calc(100% + 8px)" }}
           >
             <Drawer.Title />
             <div className="bg-zinc-50 dark:bg-slate-800 h-full w-full grow p-5 flex flex-col rounded-[10px]">
@@ -146,8 +146,8 @@ export default function Article({ children, toc, title }) {
                       }}
                       className={`${
                         activeId === item.id
-                          ? 'text-blue-500 font-semibold'
-                          : ''
+                          ? "text-blue-500 font-semibold"
+                          : ""
                       } my-1 text-sm transition-all`}
                       key={index}
                       style={{ marginLeft: (item.level - 1) * 20 }}
