@@ -1,32 +1,45 @@
 [
   {
-    "tag": "react",
+    "tag": "安全",
     "articles": [
-      "React服务端组件深度解析"
+      "JWT认证方案"
     ]
   },
   {
-    "tag": "server-components",
+    "tag": "Web",
     "articles": [
-      "React服务端组件深度解析"
-    ]
-  },
-  {
-    "tag": "next.js",
-    "articles": [
-      "React服务端组件深度解析"
-    ]
-  },
-  {
-    "tag": "ssr",
-    "articles": [
-      "React服务端组件深度解析"
+      "JWT认证方案"
     ]
   },
   {
     "tag": "架构",
     "articles": [
+      "JWT认证方案",
       "秒杀场景的技术实现与架构设计"
+    ]
+  },
+  {
+    "tag": "React",
+    "articles": [
+      "React服务端组件深度解析"
+    ]
+  },
+  {
+    "tag": "服务端组件",
+    "articles": [
+      "React服务端组件深度解析"
+    ]
+  },
+  {
+    "tag": "Next.js",
+    "articles": [
+      "React服务端组件深度解析"
+    ]
+  },
+  {
+    "tag": "SSR",
+    "articles": [
+      "React服务端组件深度解析"
     ]
   },
   {

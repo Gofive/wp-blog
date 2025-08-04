@@ -960,7 +960,6 @@
 
 .markdown-body .highlight pre,
 .markdown-body pre {
-  padding: var(--base-size-16);
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
@@ -1438,4 +1437,89 @@
 .markdown-body img {
   max-width: 100%;
   height: auto;
+}/* 自定义标题字体
+大小 */
+.markdown-body h1 {
+  font-size: 1.5rem !important;
+}
+
+.markdown-body h2 {
+  font-size: 1.3rem !important;
+}
+
+.markdown-body h3 {
+  font-size: 1.2rem !important;
+}/* 防止导
+航栏头像跳动 */
+.navbar-logo {
+  width: 32px !important;
+  height: 32px !important;
+  flex-shrink: 0;
+}
+
+/* 确保图片容器有固定尺寸 */
+.navbar-logo img {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: cover;
+}/* 404
+页面样式优化 */
+.not-found-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.not-found-card {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .not-found-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 404数字的渐变动画 */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.not-found-number {
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  animation: gradient-shift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}/* pre 标
+签主题适配背景色 */
+.markdown-body pre {
+  background-color: #f8fafc;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+}
+
+/* 深色模式下的 pre 标签样式 */
+
+/* 无语言类型代码块的样式 */
+.language-none {
+  background-color: #f8fafc;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+}
+
+/* 深色模式下的无语言类型代码块 */
+[data-mode="dark"] .language-none {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+}
+
+/* 亮色模式下的无语言类型代码块 */
+[data-mode="light"] .language-none {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+  border: 1px solid #e2e8f0 !important;
 }

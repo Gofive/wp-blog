@@ -175,7 +175,7 @@ export default function BlogContent({ markdown, toc, title }) {
             // Handle mermaid blocks
             if (!inline && match && match[1] === "mermaid") {
               return (
-                <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+                <div style={{ position: "relative" }}>
                   <CopyButton code={code} />
                   <MermaidDiagram code={code} />
                 </div>
@@ -184,7 +184,7 @@ export default function BlogContent({ markdown, toc, title }) {
 
             // Handle other code blocks with syntax highlighting
             return !inline && match ? (
-              <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+              <div style={{ position: "relative" }}>
                 <CopyButton code={code} />
                 <SyntaxHighlighter
                   style={materialOceanic}
@@ -195,6 +195,8 @@ export default function BlogContent({ markdown, toc, title }) {
                       "'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
                     fontSize: "0.9rem",
                     lineHeight: "1.5",
+                    margin: 0,
+                    padding: "1rem",
                   }}
                   {...props}
                 >
@@ -203,7 +205,7 @@ export default function BlogContent({ markdown, toc, title }) {
               </div>
             ) : (
               <code
-                className={className}
+                className={`${className} language-none`}
                 style={{
                   fontFamily:
                     "'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",

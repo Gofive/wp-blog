@@ -8,9 +8,13 @@ import BlogContent from "./BlogContent";
 // Dynamic metadata
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+  const blogData = await getBlog(`${decodedSlug}.md`);
+  const title = blogData.frontmatter?.title || decodedSlug;
   const url = `https://imwind.cc/blog/${slug}`;
+
   return {
-    title: decodeURIComponent(slug),
+    title,
     "og:url": url,
   };
 }
@@ -54,9 +58,10 @@ export default async function Blog({ params }) {
 
   // 解码中文 slug
   const decodedSlug = decodeURIComponent(slug);
-  const markdown = await getBlog(`${decodedSlug}.md`);
+  const blogData = await getBlog(`${decodedSlug}.md`);
+  const title = blogData.frontmatter?.title || decodedSlug;
 
-  const toc = await parseMarkdownWithToc(markdown);
+  const toc = await parseMarkdownWithToc(blogData.content);
 
-  return <BlogContent markdown={markdown} toc={toc} title={decodedSlug} />;
+  return <BlogContent markdown={blogData.content} toc={toc} title={title} />;
 }

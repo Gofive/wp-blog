@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
-import { STATIC_BLUR_DATA_URL, createImageErrorHandler } from "@/lib/image-utils";
+import {
+  STATIC_BLUR_DATA_URL,
+  createImageErrorHandler,
+} from "@/lib/image-utils";
 import { trackImageLoadTime } from "@/lib/performance-utils";
 
 /**
@@ -27,22 +30,28 @@ export default function OptimizedImage({
   const [isLoading, setIsLoading] = useState(true);
   const [loadStartTime] = useState(() => performance.now());
 
-  const handleLoad = useCallback((event) => {
-    setIsLoading(false);
-    setImageError(false);
+  const handleLoad = useCallback(
+    (event) => {
+      setIsLoading(false);
+      setImageError(false);
 
-    // Track loading performance
-    trackImageLoadTime(src, loadStartTime);
+      // Track loading performance
+      trackImageLoadTime(src, loadStartTime);
 
-    onLoad?.(event);
-  }, [onLoad, src, loadStartTime]);
+      onLoad?.(event);
+    },
+    [onLoad, src, loadStartTime]
+  );
 
-  const handleError = useCallback((event) => {
-    console.warn('Image failed to load:', event.target?.src || src);
-    setIsLoading(false);
-    setImageError(true);
-    onError?.(event);
-  }, [onError, src]);
+  const handleError = useCallback(
+    (event) => {
+      console.warn("Image failed to load:", event.target?.src || src);
+      setIsLoading(false);
+      setImageError(true);
+      onError?.(event);
+    },
+    [onError, src]
+  );
 
   // If there's an error and no fallback, show fallback component
   if (imageError && !fallbackSrc && fallbackComponent) {
@@ -77,10 +86,10 @@ export default function OptimizedImage({
   }
 
   return (
-    <div className="relative">
+    <div className="relative" style={{ width, height }}>
       {isLoading && (
         <div
-          className={`absolute inset-0 bg-slate-100 dark:bg-slate-700 animate-pulse ${className}`}
+          className={`absolute inset-0 bg-slate-100 dark:bg-slate-700 animate-pulse rounded`}
           style={{ width, height }}
         />
       )}
@@ -89,7 +98,9 @@ export default function OptimizedImage({
         alt={alt}
         width={width}
         height={height}
-        className={className}
+        className={`${className} ${
+          isLoading ? "opacity-0" : "opacity-100"
+        } transition-opacity duration-200`}
         quality={quality}
         sizes={sizes}
         loading={priority ? "eager" : "lazy"}
@@ -98,6 +109,7 @@ export default function OptimizedImage({
         blurDataURL={STATIC_BLUR_DATA_URL}
         onLoad={handleLoad}
         onError={handleError}
+        style={{ width, height }}
         {...props}
       />
     </div>
@@ -122,9 +134,7 @@ export function OptimizedAvatar({
       className={`flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500 text-white font-bold rounded-full ${className}`}
       style={{ width: size, height: size }}
     >
-      <span style={{ fontSize: size * 0.4 }}>
-        {fallbackInitials}
-      </span>
+      <span style={{ fontSize: size * 0.4 }}>{fallbackInitials}</span>
     </div>
   );
 
@@ -147,18 +157,30 @@ export function OptimizedAvatar({
 /**
  * Optimized Project Image component
  */
-export function OptimizedProjectImage({
-  src,
-  alt,
-  className = "",
-  ...props
-}) {
+export function OptimizedProjectImage({ src, alt, className = "", ...props }) {
   const fallbackComponent = (
-    <div className={`flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 ${className}`}>
+    <div
+      className={`flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 ${className}`}
+    >
       <div className="text-slate-400 dark:text-slate-500 text-center">
-        <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        <svg
+          className="w-12 h-12 mx-auto mb-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+          />
         </svg>
         <p className="text-sm font-medium">项目预览</p>
       </div>

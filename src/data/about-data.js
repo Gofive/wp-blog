@@ -15,7 +15,7 @@ import {
 // Personal Information Configuration
 export const personalInfo = {
   name: "IMWIND",
-  title: "全栈开发工程师 | 技术博主",
+  title: "全栈开发 | 技术架构",
   bio: {
     primary:
       "热爱技术，专注于前端和后端开发。喜欢分享技术心得，探索新的开发技术和最佳实践。",
@@ -33,42 +33,6 @@ export const personalInfo = {
 
 // Skills Configuration
 export const skillCategories = [
-  {
-    id: "frontend",
-    title: "前端开发",
-    skills: [
-      {
-        name: "React",
-        level: 90,
-        color: "from-blue-400 to-blue-600",
-        category: "framework",
-      },
-      {
-        name: "Next.js",
-        level: 85,
-        color: "from-gray-700 to-gray-900",
-        category: "framework",
-      },
-      {
-        name: "TypeScript",
-        level: 80,
-        color: "from-blue-500 to-blue-700",
-        category: "language",
-      },
-      {
-        name: "Tailwind CSS",
-        level: 88,
-        color: "from-cyan-400 to-cyan-600",
-        category: "styling",
-      },
-      {
-        name: "JavaScript",
-        level: 92,
-        color: "from-yellow-400 to-yellow-600",
-        category: "language",
-      },
-    ],
-  },
   {
     id: "backend",
     title: "后端开发",
@@ -118,6 +82,42 @@ export const skillCategories = [
     ],
   },
   {
+    id: "frontend",
+    title: "前端开发",
+    skills: [
+      {
+        name: "React",
+        level: 90,
+        color: "from-blue-400 to-blue-600",
+        category: "framework",
+      },
+      {
+        name: "Next.js",
+        level: 85,
+        color: "from-gray-700 to-gray-900",
+        category: "framework",
+      },
+      {
+        name: "TypeScript",
+        level: 80,
+        color: "from-blue-500 to-blue-700",
+        category: "language",
+      },
+      {
+        name: "Tailwind CSS",
+        level: 88,
+        color: "from-cyan-400 to-cyan-600",
+        category: "styling",
+      },
+      {
+        name: "JavaScript",
+        level: 92,
+        color: "from-yellow-400 to-yellow-600",
+        category: "language",
+      },
+    ],
+  },
+  {
     id: "tools",
     title: "工具与平台",
     skills: [
@@ -159,16 +159,16 @@ export const skillCategories = [
 export const experiences = [
   {
     id: "senior-fullstack-2022",
-    company: "科技创新公司",
-    position: "高级全栈开发工程师",
-    duration: "2022年3月 - 至今",
-    startDate: "2022-03",
+    company: "某新闻出版公司",
+    position: "技术经理",
+    duration: "2012年3月 - 至今",
+    startDate: "2012-03",
     endDate: null, // null indicates current position
     description:
       "负责公司核心产品的前后端开发，主导技术架构设计和团队技术方案制定。参与多个大型项目的开发和维护，优化系统性能，提升用户体验。",
     responsibilities: [
-      "设计和开发高性能的 Web 应用程序",
-      "负责前端架构设计和技术选型",
+      "设计和开发高性能分布式系统",
+      "负责前后端架构设计和技术选型",
       "优化应用性能，提升用户体验",
       "指导初级开发人员，进行代码审查",
     ],
@@ -177,49 +177,30 @@ export const experiences = [
       "Next.js",
       "Node.js",
       "TypeScript",
-      "PostgreSQL",
-      "AWS",
+      "Mysql",
+      "Redis",
+      "Spring Boot",
     ],
     type: "full-time",
-    location: "远程",
+    location: "合肥",
   },
   {
     id: "frontend-dev-2020",
     company: "互联网科技公司",
     position: "前端开发工程师",
-    duration: "2020年6月 - 2022年2月",
-    startDate: "2020-06",
-    endDate: "2022-02",
+    duration: "2010年10月 - 2011年12月",
+    startDate: "2010-10",
+    endDate: "2011-12",
     description:
-      "专注于前端开发，参与多个企业级项目的开发。负责组件库的设计和维护，提升开发效率和代码质量。",
+      "专注于后端开发，参与多个企业级项目的开发。负责具体业务逻辑的实现和维护，提升开发效率和代码质量。",
     responsibilities: [
-      "开发和维护企业级前端应用",
-      "设计和实现可复用的组件库",
-      "与设计师和后端工程师协作",
+      "开发和维护企业级应用",
+      "设计和实现可复用的组件",
       "参与技术方案讨论和制定",
     ],
-    technologies: ["Vue.js", "React", "JavaScript", "Sass", "Webpack", "Git"],
+    technologies: ["Java", "Mysql", "JavaScript", "Svn"],
     type: "full-time",
     location: "北京",
-  },
-  {
-    id: "junior-frontend-2019",
-    company: "软件开发公司",
-    position: "初级前端开发工程师",
-    duration: "2019年3月 - 2020年5月",
-    startDate: "2019-03",
-    endDate: "2020-05",
-    description:
-      "作为团队的初级开发人员，主要负责网站前端功能的实现和维护。在这个阶段快速学习和成长，掌握了现代前端开发技术栈。",
-    responsibilities: [
-      "实现网站前端功能和界面",
-      "修复 bug 和优化用户界面",
-      "学习和应用新的前端技术",
-      "参与项目需求分析和讨论",
-    ],
-    technologies: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP"],
-    type: "full-time",
-    location: "上海",
   },
 ];
 
@@ -347,8 +328,8 @@ export const contacts = [
     id: "email",
     type: "email",
     label: "邮箱",
-    value: "contact@imwind.cc",
-    url: "mailto:contact@imwind.cc",
+    value: "pengstu@gmail.com",
+    url: "mailto:pengstu@gmail.com",
     icon: Mail,
     color: "from-red-500 to-pink-500",
     hoverColor: "hover:from-red-600 hover:to-pink-600",
@@ -368,30 +349,6 @@ export const contacts = [
     public: true,
   },
   {
-    id: "linkedin",
-    type: "linkedin",
-    label: "LinkedIn",
-    value: "linkedin.com/in/imwind",
-    url: "https://linkedin.com/in/imwind",
-    icon: Linkedin,
-    color: "from-blue-600 to-blue-800",
-    hoverColor: "hover:from-blue-700 hover:to-blue-900",
-    primary: false,
-    public: true,
-  },
-  {
-    id: "twitter",
-    type: "twitter",
-    label: "Twitter",
-    value: "@imwind_dev",
-    url: "https://twitter.com/imwind_dev",
-    icon: Twitter,
-    color: "from-sky-400 to-blue-500",
-    hoverColor: "hover:from-sky-500 hover:to-blue-600",
-    primary: false,
-    public: true,
-  },
-  {
     id: "website",
     type: "website",
     label: "个人网站",
@@ -403,18 +360,6 @@ export const contacts = [
     primary: false,
     public: true,
   },
-  {
-    id: "wechat",
-    type: "wechat",
-    label: "微信",
-    value: "imwind_dev",
-    url: "#",
-    icon: MessageCircle,
-    color: "from-green-400 to-green-600",
-    hoverColor: "hover:from-green-500 hover:to-green-700",
-    primary: false,
-    public: false, // WeChat might be considered more private
-  },
 ];
 
 // Site Configuration
@@ -425,11 +370,10 @@ export const siteConfig = {
   url: "https://imwind.cc",
   author: {
     name: "IMWIND",
-    email: "contact@imwind.cc",
+    email: "pengstu@gmail.com",
   },
   social: {
     github: "https://github.com/gofive",
-    twitter: "https://twitter.com/imwind_dev",
   },
   locale: "zh-CN",
   timezone: "Asia/Shanghai",
