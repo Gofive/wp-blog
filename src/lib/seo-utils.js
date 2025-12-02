@@ -3,7 +3,7 @@
  * Provides functions for generating structured data and SEO metadata
  */
 
-import { personalInfo, siteConfig, experiences, projects } from "@/data/about-data";
+import { personalInfo, siteConfig, experiences } from "@/data/about-data";
 
 /**
  * Generate Person structured data for about page
@@ -275,7 +275,11 @@ export function generateSEOMetadata({
   path = '',
   image = personalInfo.avatar.src,
   type = 'website',
-  keywords = []
+  keywords = [],
+  publishedTime,
+  modifiedTime,
+  authors,
+  section
 }) {
   const baseUrl = siteConfig.url;
   const fullUrl = `${baseUrl}${path}`;
@@ -293,11 +297,11 @@ export function generateSEOMetadata({
     'TypeScript'
   ];
 
-  return {
+  const metadata = {
     title: fullTitle,
     description,
     keywords: [...defaultKeywords, ...keywords].join(', '),
-    authors: [{ name: personalInfo.name, url: baseUrl }],
+    authors: authors || [{ name: personalInfo.name, url: baseUrl }],
     creator: personalInfo.name,
     publisher: personalInfo.name,
     alternates: {
@@ -324,8 +328,8 @@ export function generateSEOMetadata({
       images: [
         {
           url: `${baseUrl}${image}`,
-          width: 400,
-          height: 400,
+          width: 1200,
+          height: 630,
           alt: `${title} - IMWIND`,
         },
       ],
@@ -339,9 +343,77 @@ export function generateSEOMetadata({
       images: [`${baseUrl}${image}`],
     },
   };
+
+  // 为文章类型添加额外字段
+  if (type === 'article') {
+    if (publishedTime) {
+      metadata.openGraph.publishedTime = publishedTime;
+    }
+    if (modifiedTime) {
+      metadata.openGraph.modifiedTime = modifiedTime;
+    }
+    if (section) {
+      metadata.openGraph.section = section;
+    }
+    if (authors && authors.length > 0) {
+      metadata.openGraph.authors = authors.map(a => a.name || a);
+    }
+  }
+
+  return metadata;
 }
 
-export default {
+/**
+ * Generate BlogPosting structured data
+ */
+export function generateBlogPostingStructuredData({
+  title,
+  description,
+  url,
+  datePublished,
+  dateModified,
+  author = personalInfo.name,
+  tags = [],
+  image
+}) {
+  const baseUrl = siteConfig.url;
+
+  return {
+    "@type": "BlogPosting",
+    "@id": `${url}#blogposting`,
+    headline: title,
+    description: description,
+    url: url,
+    datePublished: datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      "@type": "Person",
+      "@id": `${baseUrl}/about#person`,
+      name: author,
+      url: `${baseUrl}/about`
+    },
+    publisher: {
+      "@id": `${baseUrl}#website`
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url
+    },
+    keywords: tags.join(', '),
+    articleSection: "Technology",
+    inLanguage: "zh-CN",
+    ...(image && {
+      image: {
+        "@type": "ImageObject",
+        url: image.startsWith('http') ? image : `${baseUrl}${image}`,
+        width: 1200,
+        height: 630
+      }
+    })
+  };
+}
+
+const seoUtils = {
   generatePersonStructuredData,
   generateWebSiteStructuredData,
   generateWebPageStructuredData,
@@ -350,5 +422,8 @@ export default {
   generateOrganizationStructuredData,
   generateProjectStructuredData,
   generateFAQStructuredData,
-  generateSEOMetadata
+  generateSEOMetadata,
+  generateBlogPostingStructuredData
 };
+
+export default seoUtils;

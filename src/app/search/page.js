@@ -4,8 +4,17 @@ import Fuse from "fuse.js";
 import { SearchIcon } from "lucide-react";
 import searchIndex from "~/blogs/search-index.json";
 
+export const metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+  title: "搜索 - IMWIND",
+  description: "搜索 IMWIND 技术博客文章",
+};
+
 export default async function Search({ searchParams }) {
-  const { q, p = 1, s = 10 } = await searchParams;
+  const { q, p = 1 } = await searchParams;
   const posts = [];
 
   // TODO: search by title, tag, content

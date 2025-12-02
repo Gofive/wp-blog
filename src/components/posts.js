@@ -4,6 +4,7 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import dayjs from "dayjs";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 dayjs.locale("en");
 
@@ -58,7 +59,7 @@ export default function Posts({
         <div key={post.slug} className="my-6">
           <article className="markdown-body rounded-lg p-6 bg-white dark:bg-slate-800 shadow-sm border border-gray-200 dark:border-slate-700">
             <h2 className="!border-none">
-              <a href={`/blog/${post.slug}`}>{post.title}</a>
+              <Link href={`/blog/${encodeURIComponent(post.slug)}`}>{post.title}</Link>
             </h2>
             <div className="italic mb-6 text-slate-500 dark:text-slate-200 font-semibold w-full">
               {dayjs(post.date).format("MMM D,YYYY")}
@@ -79,7 +80,7 @@ export default function Posts({
             >
               {post.summary}
             </Markdown>
-            <a href={`/blog/${post.slug}`}>Read more →</a>
+            <Link href={`/blog/${encodeURIComponent(post.slug)}`}>Read more →</Link>
           </article>
         </div>
       ))}

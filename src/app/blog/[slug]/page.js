@@ -4,6 +4,16 @@ import { visit } from "unist-util-visit";
 import Slugger from "github-slugger";
 import remarkFrontmatter from "remark-frontmatter";
 import BlogContent from "./BlogContent";
+import { generateSEOMetadata, generateBlogPostingStructuredData } from "@/lib/seo-utils";
+import posts from "~/blogs/search-index.json";
+import Script from "next/script";
+
+// 生成静态路径，提升 SEO 和性能
+export async function generateStaticParams() {
+  return posts.map((post) => ({
+    slug: encodeURIComponent(post.slug),
+  }));
+}
 
 // Dynamic metadata
 export async function generateMetadata({ params }) {
@@ -12,11 +22,23 @@ export async function generateMetadata({ params }) {
   const blogData = await getBlog(`${decodedSlug}.md`);
   const title = blogData.frontmatter?.title || decodedSlug;
   const url = `https://imwind.cc/blog/${slug}`;
+  
+  // 从 search-index.json 中查找文章信息以获取 summary
+  const postInfo = posts.find(p => p.slug === decodedSlug);
+  const description = postInfo?.summary 
+    ? postInfo.summary.replace(/\n/g, ' ').substring(0, 160).trim()
+    : `${title} - IMWIND 技术博客文章`;
+  
+  const tags = blogData.frontmatter?.tags || [];
+  const date = blogData.frontmatter?.date || new Date().toISOString().split('T')[0];
 
-  return {
+  return generateSEOMetadata({
     title,
-    "og:url": url,
-  };
+    description,
+    path: `/blog/${slug}`,
+    type: 'article',
+    keywords: tags,
+  });
 }
 
 /**
@@ -60,8 +82,47 @@ export default async function Blog({ params }) {
   const decodedSlug = decodeURIComponent(slug);
   const blogData = await getBlog(`${decodedSlug}.md`);
   const title = blogData.frontmatter?.title || decodedSlug;
+  const url = `https://imwind.cc/blog/${slug}`;
+  
+  // 从 search-index.json 中查找文章信息
+  const postInfo = posts.find(p => p.slug === decodedSlug);
+  const description = postInfo?.summary 
+    ? postInfo.summary.replace(/\n/g, ' ').substring(0, 160).trim()
+    : `${title} - IMWIND 技术博客文章`;
+  
+  const tags = blogData.frontmatter?.tags || [];
+  const datePublished = blogData.frontmatter?.date 
+    ? new Date(blogData.frontmatter.date).toISOString()
+    : new Date().toISOString();
 
   const toc = await parseMarkdownWithToc(blogData.content);
 
-  return <BlogContent markdown={blogData.content} toc={toc} title={title} />;
+  // 生成结构化数据
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      generateBlogPostingStructuredData({
+        title,
+        description,
+        url,
+        datePublished,
+        dateModified: datePublished,
+        tags,
+        image: "/iwb.png"
+      })
+    ]
+  };
+
+  return (
+    <>
+      <Script
+        id={`blog-structured-data-${slug}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+      <BlogContent markdown={blogData.content} toc={toc} title={title} />
+    </>
+  );
 }
