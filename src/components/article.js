@@ -12,14 +12,15 @@ export default function Article({ children, toc, title }) {
 
   useEffect(() => {
     const hash = window.location.hash;
-    if (!hash) {
+    const mainContent = document.getElementById("main-content");
+    if (!hash || !mainContent) {
       setActiveId(null);
       return;
     }
     const element = document.querySelector(decodeURIComponent(hash));
     console.log("hash", hash);
     if (element) {
-      window.scrollTo({
+      mainContent.scrollTo({
         top: element.offsetTop,
         behavior: "instant",
       });
@@ -29,9 +30,10 @@ export default function Article({ children, toc, title }) {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
+      const mainContent = document.getElementById("main-content");
       const element = document.querySelector(decodeURIComponent(hash));
-      if (element) {
-        window.scrollTo({
+      if (element && mainContent) {
+        mainContent.scrollTo({
           top: element.offsetTop,
           behavior: "smooth",
         });
@@ -46,12 +48,15 @@ export default function Article({ children, toc, title }) {
 
   // 滚动监听并更新 activeId
   useEffect(() => {
+    const mainContent = document.getElementById("main-content");
+    if (!mainContent) return;
+
     const handleScroll = debounce(() => {
       // 获取所有标题元素
       const headingElements = toc.map((item) =>
         document.getElementById(item.id)
       );
-      const scrollPosition = window.scrollY;
+      const scrollPosition = mainContent.scrollTop;
 
       // 找到第一个顶部接近的标题
       for (let i = headingElements.length - 1; i >= 0; i--) {
@@ -73,21 +78,21 @@ export default function Article({ children, toc, title }) {
         }
       }
     }, 200);
-    window.addEventListener("scroll", handleScroll);
+    mainContent.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      mainContent.removeEventListener("scroll", handleScroll);
     };
   }, [toc, title]);
 
   return (
-    <div className="relative mx-auto max-w-[1400px] flex flex-col md:flex-row gap-8">
+    <div className="relative mx-auto w-full flex flex-col md:flex-row gap-8">
       <div className="mt-4 w-full min-w-0 flex-1 px-2 md:px-8">
         <article className="markdown-body max-w-none">
           <h1>{title}</h1>
           {children}
         </article>
       </div>
-      <div className="flex-col justify-between sticky top-[100px] md:order-last order-first w-full h-[calc(100vh-100px)] hidden md:w-72 shrink-0 md:flex">
+      <div className="flex-col justify-between sticky top-4 md:order-last order-first w-full h-[calc(100vh-80px)] hidden md:w-64 shrink-0 md:flex">
         {/* 目录区域 */}
         <nav className="p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm max-h-[calc(100vh-180px)] overflow-y-auto">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 border-b border-gray-200 dark:border-slate-600 pb-2">
@@ -99,11 +104,10 @@ export default function Article({ children, toc, title }) {
                 onClick={() => {
                   setActiveId(item.id);
                 }}
-                className={`${
-                  activeId === item.id
-                    ? "text-blue-500 font-semibold bg-blue-50 dark:bg-blue-900/20"
-                    : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-                } text-sm transition-all cursor-pointer rounded px-2 py-1`}
+                className={`${activeId === item.id
+                  ? "text-blue-500 font-semibold bg-blue-50 dark:bg-blue-900/20"
+                  : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                  } text-sm transition-all cursor-pointer rounded px-2 py-1`}
                 key={index}
                 style={{ marginLeft: Math.max(0, (item.level - 2) * 12) }}
               >
@@ -144,11 +148,10 @@ export default function Article({ children, toc, title }) {
                         setOpen(false);
                         setActiveId(item.id);
                       }}
-                      className={`${
-                        activeId === item.id
-                          ? "text-blue-500 font-semibold"
-                          : ""
-                      } my-1 text-sm transition-all`}
+                      className={`${activeId === item.id
+                        ? "text-blue-500 font-semibold"
+                        : ""
+                        } my-1 text-sm transition-all`}
                       key={index}
                       style={{ marginLeft: (item.level - 1) * 20 }}
                     >

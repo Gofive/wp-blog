@@ -17,8 +17,11 @@ export default function FloatingNav() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollY = mainContent.scrollTop;
 
       // Show floating nav after scrolling 300px
       setIsVisible(scrollY > 300);
@@ -33,6 +36,8 @@ export default function FloatingNav() {
         if (!section.element) return false;
 
         const rect = section.element.getBoundingClientRect();
+        // Since the scroll container is offset, we should check relative to the container or viewport
+        // getBoundingClientRect is relative to viewport. If mainContent starts at top: 56px, then we should adjust.
         return rect.top <= 100 && rect.bottom >= 100;
       });
 
@@ -41,18 +46,19 @@ export default function FloatingNav() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    mainContent.addEventListener('scroll', handleScroll);
     handleScroll(); // Check initial state
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => mainContent.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80;
+    const mainContent = document.getElementById('main-content');
+    if (element && mainContent) {
+      const offsetTop = element.offsetTop - 20; // Simplified offset for independent scroll
 
-      window.scrollTo({
+      mainContent.scrollTo({
         top: offsetTop,
         behavior: 'smooth'
       });
@@ -60,10 +66,13 @@ export default function FloatingNav() {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (

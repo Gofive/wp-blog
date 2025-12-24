@@ -12,8 +12,11 @@ export default function UpTop() {
   const isBlogPost = pathname?.startsWith('/blog/') && pathname !== '/blog';
 
   useEffect(() => {
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      const scrollPosition = mainContent.scrollTop;
 
       if (scrollPosition > 200) {
         setShow(true);
@@ -22,25 +25,27 @@ export default function UpTop() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    mainContent.addEventListener('scroll', handleScroll);
 
     // 清理事件监听器
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      mainContent.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
     <ArrowUp
       onClick={() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+          mainContent.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }
       }}
-      className={`${
-        show ? 'relative' : 'hidden'
-      } w-10 h-10 p-2 bg-indigo-500 hover:bg-indigo-600 text-slate-100 rounded-full cursor-pointer shadow-lg transition-all duration-300 z-30`}
+      className={`${show ? 'relative' : 'hidden'
+        } w-10 h-10 p-2 bg-indigo-500 hover:bg-indigo-600 text-slate-100 rounded-full cursor-pointer shadow-lg transition-all duration-300 z-30`}
       size={24}
     />
   );

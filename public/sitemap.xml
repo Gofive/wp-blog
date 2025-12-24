@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<sitemap><loc>https://imwind.cc/sitemap-0.xml</loc></sitemap>
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://imwind.cc/about</loc><lastmod>2025-12-24T13:37:06.312Z</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://imwind.cc/blog/JWT认证方案</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/RPC远程调用</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/React服务端组件深度解析</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/应对突发流量并保证数据一致性的实践</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/现代前端工程的演进与思考</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/秒杀场景的技术实现与架构设计</loc><lastmod>2025-12-24T13:37:06.313Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/JWT%E8%AE%A4%E8%AF%81%E6%96%B9%E6%A1%88</loc><lastmod>2019-05-23T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/React%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BB%84%E4%BB%B6%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90</loc><lastmod>2025-04-20T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8</loc><lastmod>2025-11-23T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/%E5%BA%94%E5%AF%B9%E7%AA%81%E5%8F%91%E6%B5%81%E9%87%8F%E5%B9%B6%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E5%AE%9E%E8%B7%B5</loc><lastmod>2024-11-20T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/%E7%8E%B0%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%BC%94%E8%BF%9B%E4%B8%8E%E6%80%9D%E8%80%83</loc><lastmod>2025-08-17T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://imwind.cc/blog/%E7%A7%92%E6%9D%80%E5%9C%BA%E6%99%AF%E7%9A%84%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1</loc><lastmod>2023-05-23T00:00:00.000Z</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

@@ -32,7 +32,7 @@ const mainNav = [
 
 export default function MainNav({ className, ...props }) {
   const [open, setOpen] = useState(false);
-  const [_, setIsOpen] = useAtom(toggleMenuAtom);
+  const [, setIsOpen] = useAtom(toggleMenuAtom);
 
   const handleClick = () => {
     setOpen(!open);
@@ -52,7 +52,7 @@ export default function MainNav({ className, ...props }) {
         <div className="max-w-6xl mx-auto">
           <div className="border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
             <div className="relative h-[56px] flex items-center">
-              <a href="/" className="navbar-logo relative">
+              <Link href="/" className="navbar-logo relative">
                 <OptimizedImage
                   className="navbar-logo rounded"
                   src="/iwb.png"
@@ -62,19 +62,19 @@ export default function MainNav({ className, ...props }) {
                   sizes="32px"
                   priority
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/"
                 className="mx-3 font-semibold hidden md:flex overflow-hidden md:w-auto"
               >
                 IMWIND
-              </a>
-              <div className="relative hidden md:flex items-center ml-auto">
-                <div className="relative flex items-center">
-                  <nav className="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
-                    <ul className="flex space-x-8">
+              </Link>
+              <div className="relative hidden md:flex items-center ml-auto h-full">
+                <div className="relative flex items-center h-full">
+                  <nav className="h-full text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
+                    <ul className="flex space-x-8 h-full">
                       {mainNav.map((item) => (
-                        <li key={item.href}>
+                        <li key={item.href} className="flex h-full items-center justify-center ">
                           <NavItem item={item} />
                         </li>
                       ))}

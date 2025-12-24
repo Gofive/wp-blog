@@ -10,34 +10,22 @@ export default function SkillsSection() {
   return (
     <motion.section
       id="skills"
-      className="py-12 sm:py-16 lg:py-20"
+      className="py-12 sm:py-16"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.5 }}
       viewport={{ once: true }}
     >
-      <motion.h2
+      <h2
         id="skills-heading"
-        className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-12 text-center text-slate-900 dark:text-white"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
+        className="text-xl sm:text-2xl font-bold mb-8 text-slate-900 dark:text-slate-50 border-b pb-2"
       >
-        技术技能
-      </motion.h2>
+        技术系统
+      </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
         {categories.map((category, index) => (
-          <motion.div
-            key={category.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.15 }}
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <SkillCategory category={category} />
-          </motion.div>
+          <SkillCategory key={category.title} category={category} />
         ))}
       </div>
     </motion.section>

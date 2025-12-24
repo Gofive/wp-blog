@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 import { personalInfo, siteConfig } from "@/data/about-data";
 import { generateAboutPageStructuredData, generateSEOMetadata } from "@/lib/seo-utils";
 
+// ISR 配置：每 3600 秒（1小时）重新验证一次页面
+export const revalidate = 3600;
+
 // Dynamic import for better code splitting
 const AboutPageClient = dynamic(() => import("@/components/about-page-client"), {
   loading: () => (

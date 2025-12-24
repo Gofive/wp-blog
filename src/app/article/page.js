@@ -4,6 +4,9 @@ import { getArticles } from "@/lib/read-md";
 import React from "react";
 import { generateSEOMetadata } from "@/lib/seo-utils";
 
+// ISR 配置：每 3600 秒（1小时）重新验证一次页面
+export const revalidate = 3600;
+
 export async function generateMetadata({ searchParams }) {
   const { tag } = await searchParams;
   const title = tag 

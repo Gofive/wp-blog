@@ -53,8 +53,6 @@ function parseFrontmatter(content) {
 }
 
 export async function getBlog(slug) {
-  "use server";
-  console.log(slug);
   const filePath = path.join(BASE_DIR, slug);
   // 读取每个 Markdown 文件的内容
   const rawContent = fs.readFileSync(filePath, "utf8");

@@ -8,10 +8,13 @@ import { generateSEOMetadata, generateBlogPostingStructuredData } from "@/lib/se
 import posts from "~/blogs/search-index.json";
 import Script from "next/script";
 
+// ISR 配置：每 3600 秒（1小时）重新验证一次页面
+export const revalidate = 3600;
+
 // 生成静态路径，提升 SEO 和性能
 export async function generateStaticParams() {
   return posts.map((post) => ({
-    slug: encodeURIComponent(post.slug),
+    slug: post.slug,
   }));
 }
 

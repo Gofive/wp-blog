@@ -4,6 +4,13 @@ import Script from "next/script";
 
 import "./globals.css";
 import UpTop from "@/components/up-top";
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata = {
   title: {
@@ -83,7 +90,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="zh-CN" className="scroll-smooth">
+    <html lang="zh-CN" className="h-full">
       <Script
         async
         src="https://www.googletagmanager.com/gtag/js?id=G-SDZFGG4YWC"
@@ -98,11 +105,15 @@ export default function RootLayout({ children }) {
         `}
       </Script>
       <body
-        className={`antialiased bg-white dark:bg-slate-800 dark:text-zinc-100`}
+        className={`${inter.className} antialiased bg-white dark:bg-slate-800 dark:text-zinc-100 h-full overflow-hidden`}
       >
         <IwbTheme>
-          <MainNav />
-          <div className="max-w-6xl mx-auto px-2">{children}</div>
+          <div className="flex flex-col h-full">
+            <MainNav />
+            <main id="main-content" className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth">
+              <div className="container max-w-5xl">{children}</div>
+            </main>
+          </div>
         </IwbTheme>
       </body>
     </html>

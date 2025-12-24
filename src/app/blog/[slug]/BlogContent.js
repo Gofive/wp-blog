@@ -168,7 +168,7 @@ export default function BlogContent({ markdown, toc, title }) {
           [remarkFrontmatter],
         ]}
         components={{
-          code({ inline, className, children, node, ...props }) {
+          code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const code = String(children).replace(/\n$/, "");
 
