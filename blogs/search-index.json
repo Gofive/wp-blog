@@ -27,6 +27,45 @@
     "date": "2025-04-20"
   },
   {
+    "title": "RPC远程调用详解",
+    "slug": "RPC远程调用",
+    "summary": "\n在单机应用中，调用一个函数非常简单，直接通过函数指针或引用即可。但在分布式系统中，服务部署在不同的服务器上，如何像调用本地函数一样调用远程服务器上的函数呢？这就是 RPC 要解决的问题。\n\nRPC 的核心目标是：**让远程服务调用看起来像本地调用一样简单。**\n",
+    "content": "RPCRemoteProcedureCall远程过程调用是一种计算机通信协议该协议允许运行于一台计算机的程序调用另一台计算机的子程序而程序员无需额外地为这个交互作用编程如果涉及的软件采用面向对象编程那么RPC亦可称作远程调用或远程方法调用一RPC的基本概念在单机应用中调用一个函数非常简单直接通过函数指针或引用即可但在分布式系统中服务部署在不同的服务器上如何像调用本地函数一样调用远程服务器上的函数呢这就是RPC要解决的问题RPC的核心目标是让远程服务调用看起来像本地调用一样简单二RPC的工作原理RPC的实现过程通常包含以下几个关键组件Client客户端服务的调用方ClientStub客户端存根存放服务端的地址消息将客户端的请求参数打包成网络消息再通过网络发送给服务端NetworkService网络传输底层传输可以是TCP或HTTPServerStub服务端存根接收客户端发送过来的消息将消息解包并调用本地的方法Server服务端服务的提供方调用流程客户端调用客户端Stub就像调用本地方法一样客户端Stub将参数打包序列化并通过网络发送给服务端服务端Stub接收到消息后将参数解包反序列化服务端Stub调用本地服务方法服务端执行方法并将结果返回给服务端Stub服务端Stub将结果打包序列化并通过网络发送给客户端客户端Stub接收到消息将结果解包反序列化客户端得到最终结果三RPC与REST的区别RESTRepresentationalStateTransfer是一种架构风格通常基于HTTP协议特性RPCREST核心思想动作Action强调过程资源Resource强调状态传输协议通常基于TCP或HTTP2基于HTTP1.1或HTTP2数据格式Protobuf,Thrift,Hessian等二进制格式高效JSON,XML等文本格式可读性好性能高序列化反序列化快包体小相对较低适用场景内部微服务之间的高性能通信对外API异构系统集成四常见的RPC框架gRPC由Google开发基于HTTP2和Protobuf支持多语言性能优异Dubbo阿里巴巴开源的高性能JavaRPC框架提供了完善的服务治理功能ThriftFacebook开发的跨语言RPC框架SpringCloudFeign基于HTTP的伪RPC框架使用起来非常方便但本质上是HTTP调用五RPC的优缺点优点简单易用开发者无需关注底层网络通信细节高效通常使用二进制序列化和TCP协议性能优于HTTPJSON强类型通常有IDL接口定义语言约束类型安全缺点耦合性客户端和服务端需要依赖相同的接口定义调试困难二进制协议不如JSON直观抓包调试相对麻烦复杂性引入了服务发现负载均衡熔断降级等服务治理问题六总结RPC是构建分布式系统和微服务架构的基石选择合适的RPC框架如gRPC或Dubbo可以显著提高系统的性能和开发效率但在设计系统时也需要权衡RPC和REST的适用场景通常内部服务间使用RPC对外接口使用REST",
+    "tags": [
+      "RPC",
+      "Backend",
+      "Architecture"
+    ],
+    "category": "Technology",
+    "date": "2025-11-23"
+  },
+  {
+    "title": "应对突发流量并保证数据一致性的一些实践",
+    "slug": "应对突发流量并保证数据一致性的实践",
+    "summary": "\n```text\n课程中心        ←→   Spring Cloud Gateway\n选课服务        ←→   Nacos（注册中心 + 配置中心）\n用户服务        ←→   Sentinel（限流熔断降级）",
+    "content": "以下是我在一个教育项目中实践高并发选课系统峰值QPS超3w秒杀瞬间10w请求的完整技术方案总结重点解决高并发下的极致响应速度和强数据一致性两大核心问题我只提供了一些伪代码实现如需交流欢迎通过本站联系本人一整体技术架构SpringCloudJDK11text课程中心SpringCloudGateway选课服务Nacos注册中心配置中心用户服务Sentinel限流熔断降级库存服务RocketMQ事务消息实现最终一致性缓存服务RedisCluster4主4从定时任务XXLJOB监控告警PrometheusGrafanaSkyWalking数据库MySQL8.0读写分离ShardingSphereJDBC分库分表二核心高并发数据一致性实践重点1.网关层限流防刷最外层削峰技术栈SpringCloudGatewaySentinelRedisyamlSentinel热点参数限流规则针对courseIdresourceselect_courselimitAppdefaultgrade1QPS限流count5000单个课程每秒最多5000次请求strategy0controlBehavior0paramIdx0对路径中的第一个参数courseId限流paramFlowItemListburstCount10000durationInSec1注意点必须开启热点参数限流否则热门课程会被刷爆Sentinel规则持久化到Redis避免重启丢失配合自定义GlobalFilterRedisLua实现一人数一单黑名单机制2.本地缓存Redis预减库存99.9请求不打数据库核心思路Redis本地缓存CaffeineDBjavaComponentpublicclassCourseStockServiceAutowiredRedisTemplateredisTemplateRedis预热时加载privatestaticfinalStringREDUCE_STOCK_LUAifredis.callexists,KEYS11thennlocalstocktonumberredis.callget,KEYS1nifstock0thennredis.calldecr,KEYS1nreturn1nendnendnreturn0publicbooleandeductStockLongcourseIdStringkeycoursestockcourseIdLongresultredisTemplate.executenewDefaultRedisScriptREDUCE_STOCK_LUA,Long.class,Collections.singletonListkeyreturnresult1注意点课程发布时必须提前把库存写入Redis严禁使用GETDECR两步操作必须用Lua保证原子性Caffeine本地缓存TTL30ssizebased5000防止缓存雪崩热门课程主动刷新本地缓存3.异步下单RocketMQ事务消息最终一致性最佳实践javaServicepublicclassOrderServiceRocketMQTransactionListenerclassOrderTransactionListenerimplementsRocketMQLocalTransactionListenerOverridepublicRocketMQLocalTransactionStateexecuteLocalTransactionMessagemsg,Objectarg1.创建待支付订单2.MySQL乐观锁扣库存3.写入本地事务表returnsuccess?COMMITROLLBACKOverridepublicRocketMQLocalTransactionStatecheckLocalTransactionMessagemsg回查本地事务状态防止半消息丢失MySQL乐观锁扣库存sqlUPDATEcourse_stockSETstockstock1,versionversion1WHEREcourse_id?ANDstock0ANDversion?注意点事务消息消费端才是真正落单的地方回查时间建议1分钟超时视为失败比分布式锁性能高10倍以上4.超卖三层防护兜底方案层级技术方案作用第一层RedisLua预减挡住99.9请求第二层MySQL乐观锁防止漏网之鱼第三层支付前最终校验定时任务释放人工可干预的终极兜底5.数据库层优化ShardingSphereJDBC按user_id分4库8表读写分离主库写订单从库读热门课程表单独分库course_hot_01写操作通过CanalKafka同步到Elasticsearch6.Sentinel熔断降级javaSentinelResourcevalueselectCourse,blockHandlerblockHandler,fallbackfallbackpublicResultselectCourseLongcourseId...publicResultblockHandlerLongcourseId,BlockExceptionexreturnResult.fail系统繁忙请稍后重试publicResultfallbackLongcourseId,ThrowabletreturnResult.successgetDefaultCourseInfocourseId7.异步通知与补偿机制支付成功普通RocketMQ消息更新订单状态超时未支付XXLJOB每分钟扫描释放库存回补Redis三真实压测数据2024秋季开学选课首日时间点瞬时QPS平均RT成功率超卖数量开抢前10秒108,00028ms99.970峰值持续1分钟47,00045ms99.990全程10分钟平均18k32ms1000四最核心的实践经验永远不要相信前端限流所有防护必须后端实现99.9的请求不要碰数据库用Redis本地缓存搞定库存扣减必须用Lua或数据库唯一约束绝不相信业务代码逻辑高并发下单首选事务消息队列RocketMQ比分布式锁快一个数量级必须有三级防护补偿机制任何单点都可能被击穿监控必须秒级RedisQPSMQ堆积Sentinel触发次数慢查询",
+    "tags": [
+      "Java",
+      "分布式",
+      "高并发"
+    ],
+    "category": "Technology",
+    "date": "2024-11-20"
+  },
+  {
+    "title": "现代前端工程的演进与思考",
+    "slug": "现代前端工程的演进与思考",
+    "summary": "\n工程化的地基是构建工具。过去几年，我们见证了从 Webpack 一统天下到“百家争鸣”的局面，核心驱动力只有一个：**速度**。\n\n### 1. 从 JavaScript 到 Native (Rust/Go)\nWebpack 极其强大，但受限于 JavaScript 的单线程和解释执行性能，在大型项目中显得力不从心。",
+    "content": "随着Web应用复杂度的指数级上升前端工程化早已突破了写页面打包的传统范畴今天的现代化前端工程化是一个以开发者体验DX为核心以用户体验UX为终点深度融合云原生能力的完整工业体系本文将从构建工具的变革资产沉淀策略自动化质量保障以及边缘交付与灰度体系四个维度探讨现代化前端工程化的核心图景一构建工具的极速变革Rust化与Bundleless工程化的地基是构建工具过去几年我们见证了从Webpack一统天下到百家争鸣的局面核心驱动力只有一个速度1.从JavaScript到NativeRustGoWebpack极其强大但受限于JavaScript的单线程和解释执行性能在大型项目中显得力不从心ViteEsbuild利用Go语言编写的Esbuild进行依赖预构建Vite将开发环境启动速度提升了数倍RspackTurbopack更是激进地用Rust重写了打包引擎特别是Rspack字节跳动开源它在保持与Webpack生态高度兼容的同时提供了接近原生代码的编译性能2.构建思维的转变Bundleless开发时现代工具如Vite在开发环境利用浏览器原生的ESM能力通过HTTP请求按需加载文件而非全量打包持久化缓存PersistentCacheWebpack5和Turbopack将缓存机制做到了极致确保持久化缓存失效前构建是零耗时的工具的选择不再仅仅看功能而是看它能否在项目膨胀10倍后依然保持秒级的热更新HMRRspack目前看来是大型存量Webpack项目迁移的最佳现代化路径二资产沉淀从组件库到设计系统工程工程化的核心目的是复用但现代化的复用不再是简单的components文件夹而是基于Monorepo的原子化设计系统1.组件分层策略HeadlessUI逻辑与样式分离使用ReactAria或RadixUI处理复杂的交互逻辑无障碍访问键盘导航自建样式层原子化CSSTailwindCSS的流行改变了组件样式的编写方式它让DesignToken设计变量的落地变得异常简单2.隔离与文档化StorybookDumi组件开发必须独立于业务项目通过Storybook进行隔离开发不仅强迫组件解耦还自动生成了可视化的文档MonorepoTurborepoNx现代前端倾向于将组件库工具库业务应用放在同一个Monorepo中利用Turborepo的缓存机制修改一个Button组件CI仅会重新构建依赖该Button的应用而非整个仓库三自动化测试构建敢于重构的信心在敏捷开发中没有自动化测试的工程化是脆弱的现代测试策略呈金字塔状但重心正在发生微妙偏移1.单元测试UnitTestVitest替代Jest成为新宠它与Vite共享配置和转换逻辑速度极快解决了测试环境与生产环境构建逻辑不一致的痛点2.端到端测试E2EPlaywrightCypress现代E2E工具非常稳定且易于调试核心思考现在的趋势是减少复杂的单元测试增加关键路径的E2E测试与其测试Click函数是否被调用不如测试用户点击后页面是否真的发生了跳转3.视觉回归测试VisualRegression在组件库更新时如何确保没有破坏UI工具如Percy或Chromatic会在CI阶段截图对比像素级的差异都会触发布署拦截四部署与交付边缘计算与灰度体系代码合并只是开始如何安全快速地将代码交付给全球用户是现代化工程化的最后一公里1.自动化部署到边缘节点EdgeDeployment传统的部署是将静态资源扔到Nginx或S3现代部署则是静态资源CDN边缘计算EdgeFunctions边缘函数利用Vercel,Netlify或CloudflareWorkers我们可以将部分后端逻辑如鉴权SSR渲染AB测试分流下沉到离用户最近的CDN节点执行ISR增量静态再生成结合Next.js可以在边缘节点缓存动态生成的页面既有静态页面的速度又有动态页面的灵活性2.灰度发布与特性开关FeatureFlags上线即全量是危险的现代工程化要求部署Deploy和发布Release分离CanaryRelease金丝雀发布通过负载均衡或边缘网关先将5的流量切给新版本结合Sentry等监控工具如果发现报错率飙升自动回滚FeatureFlags代码中埋入开关如LaunchDarkly或自研系统新功能上线时默认关闭通过后台配置对特定用户群体如内部员工Beta用户开启这消除了长分支开发的痛苦允许主干随时可发布现代化前端工程化本质上是将不确定性通过工具转化为确定性的过程构建工具解决了开发效率的确定性组件沉淀解决了UI一致性的确定性自动化测试解决了代码质量的确定性边缘部署与灰度解决了交付稳定性的确定性未来的前端工程师不仅是界面的实现者更是应用交付架构师我们需要关注的不再仅仅是div怎么写而是代码如何以最快最安全的方式流动到用户的屏幕上",
+    "tags": [
+      "前端",
+      "思考",
+      "Next.js"
+    ],
+    "category": "Technology",
+    "date": "2025-08-17"
+  },
+  {
     "title": "秒杀场景的技术实现与架构设计",
     "slug": "秒杀场景的技术实现与架构设计",
     "summary": "\n## 1. 什么是秒杀场景？\n\n秒杀是指在特定时间内，用户通过线上平台以极低的价格抢购限量商品或服务的活动。秒杀场景具有以下特点：\n\n- **高并发**：短时间内大量用户同时访问系统，请求量激增。\n- **瞬时流量**：流量在秒杀开始时达到峰值，随后迅速下降。\n- **库存有限**：商品数量少，需快速判断库存并锁定。\n- **低延迟要求**：用户期望快速响应，任何延迟可能导致用户流失。\n- **公平性**：确保每个用户有公平的抢购机会，防止恶意刷单或作弊。\n\n常见的秒杀场景包括电商平台的“双 11”促销、节假日特价机票抢购、演唱会门票秒杀等。\n",

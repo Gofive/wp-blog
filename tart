@@ -1,0 +1,32 @@
+[1mdiff --git a/src/app/blog/[slug]/page.js b/src/app/blog/[slug]/page.js[m
+[1mindex 9c3fe73..35ea4b5 100644[m
+[1m--- a/src/app/blog/[slug]/page.js[m
+[1m+++ b/src/app/blog/[slug]/page.js[m
+[36m@@ -9,9 +9,10 @@[m [mimport posts from "~/blogs/search-index.json";[m
+ import Script from "next/script";[m
+ [m
+ // 生成静态路径，提升 SEO 和性能[m
+[32m+[m[32m// Next.js 会自动处理 URL 编码，所以这里返回原始的 slug[m
+ export async function generateStaticParams() {[m
+   return posts.map((post) => ({[m
+[31m-    slug: encodeURIComponent(post.slug),[m
+[32m+[m[32m    slug: post.slug,[m
+   }));[m
+ }[m
+ [m
+[36m@@ -21,7 +22,6 @@[m [mexport async function generateMetadata({ params }) {[m
+   const decodedSlug = decodeURIComponent(slug);[m
+   const blogData = await getBlog(`${decodedSlug}.md`);[m
+   const title = blogData.frontmatter?.title || decodedSlug;[m
+[31m-  const url = `https://imwind.cc/blog/${slug}`;[m
+   [m
+   // 从 search-index.json 中查找文章信息以获取 summary[m
+   const postInfo = posts.find(p => p.slug === decodedSlug);[m
+[36m@@ -30,7 +30,6 @@[m [mexport async function generateMetadata({ params }) {[m
+     : `${title} - IMWIND 技术博客文章`;[m
+   [m
+   const tags = blogData.frontmatter?.tags || [];[m
+[31m-  const date = blogData.frontmatter?.date || new Date().toISOString().split('T')[0];[m
+ [m
+   return generateSEOMetadata({[m
+     title,[m
