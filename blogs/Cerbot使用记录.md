@@ -21,7 +21,7 @@ tags: ['Certbot', 'Nginx', 'HTTPS', 'SSL']
 
 Webroot 的工作原理非常简单：Certbot 在你的 Web 根目录下放置一个临时文件，Let's Encrypt 的服务器通过 HTTP 访问这个文件，验证你对该域名的所有权。
 
-## 三、 实战配置步骤
+## 三、 配置步骤
 
 ### 1. 准备验证专用目录
 
@@ -30,7 +30,6 @@ Webroot 的工作原理非常简单：Certbot 在你的 Web 根目录下放置�
 ```bash
 sudo mkdir -p /var/www/letsencrypt
 ```
-````
 
 ### 2. 配置 Nginx 响应验证请求
 
