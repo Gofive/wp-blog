@@ -1,4 +1,3 @@
-````markdown
 ---
 title: 'Certbot 实战：使用 Webroot 模式实现证书自动续期'
 category: 'Technology'
@@ -99,7 +98,3 @@ sudo certbot renew --dry-run --deploy-hook "nginx -s reload"
 ## 五、 总结
 
 Webroot 模式是 Certbot 方案中最灵活的一种。对于需要高稳定性的 API 域名或 App 关联域名（如 `auth.imwind.cc`）来说，这种方式既保证了证书的安全获取，又维持了服务器配置的纯净。
-
-```
-
-```
