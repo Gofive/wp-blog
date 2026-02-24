@@ -1,24 +1,29 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import aboutDataManager from "../lib/about-data-manager.js";
-import { Mail, Github, MessageSquare, Twitter, Globe } from "lucide-react";
+import { motion } from 'motion/react';
+import aboutDataManager from '../lib/about-data-manager.js';
+import { Mail, Github, MessageSquare, Twitter, Globe } from 'lucide-react';
 
 export default function ContactSection() {
   const { all: contacts } = aboutDataManager.getContactData();
 
   const getIcon = (type) => {
     switch (type) {
-      case 'email': return <Mail className="w-4 h-4" />;
-      case 'github': return <Github className="w-4 h-4" />;
-      case 'wechat': return <MessageSquare className="w-4 h-4" />;
-      case 'twitter': return <Twitter className="w-4 h-4" />;
-      default: return <Globe className="w-4 h-4" />;
+      case 'email':
+        return <Mail className="w-4 h-4" />;
+      case 'github':
+        return <Github className="w-4 h-4" />;
+      case 'wechat':
+        return <MessageSquare className="w-4 h-4" />;
+      case 'twitter':
+        return <Twitter className="w-4 h-4" />;
+      default:
+        return <Globe className="w-4 h-4" />;
     }
   };
 
   const handleClick = (e, contact) => {
-    if (contact.type === "wechat") {
+    if (contact.type === 'wechat') {
       e.preventDefault();
       navigator.clipboard?.writeText(contact.value);
       alert(`微信号 ${contact.value} 已复制到剪贴板`);
@@ -28,7 +33,7 @@ export default function ContactSection() {
   return (
     <motion.section
       id="contact"
-      className="py-12 sm:py-16"
+      className="py-8 sm:py-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -52,8 +57,16 @@ export default function ContactSection() {
               key={contact.type}
               href={contact.url}
               onClick={(e) => handleClick(e, contact)}
-              target={contact.type !== "email" && contact.type !== "wechat" ? "_blank" : undefined}
-              rel={contact.type !== "email" && contact.type !== "wechat" ? "noopener noreferrer" : undefined}
+              target={
+                contact.type !== 'email' && contact.type !== 'wechat'
+                  ? '_blank'
+                  : undefined
+              }
+              rel={
+                contact.type !== 'email' && contact.type !== 'wechat'
+                  ? 'noopener noreferrer'
+                  : undefined
+              }
               className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors group shadow-sm"
             >
               <div className="text-slate-500 group-hover:text-blue-500 transition-colors">

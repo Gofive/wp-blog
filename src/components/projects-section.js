@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import ProjectCard from "./project-card";
-import aboutDataManager from "../lib/about-data-manager.js";
+import { motion } from 'motion/react';
+import ProjectCard from './project-card';
+import aboutDataManager from '../lib/about-data-manager.js';
 
 export default function ProjectsSection() {
   const { featured, all } = aboutDataManager.getProjectsData();
@@ -10,7 +10,7 @@ export default function ProjectsSection() {
   return (
     <motion.section
       id="projects"
-      className="py-12 sm:py-16"
+      className="py-8 sm:py-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -27,13 +27,15 @@ export default function ProjectsSection() {
         {featured.map((project, index) => (
           <ProjectCard key={project.title} project={project} index={index} />
         ))}
-        {all.filter(project => !project.featured).map((project, index) => (
-          <ProjectCard
-            key={project.title}
-            project={project}
-            index={index + featured.length}
-          />
-        ))}
+        {all
+          .filter((project) => !project.featured)
+          .map((project, index) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              index={index + featured.length}
+            />
+          ))}
       </div>
     </motion.section>
   );

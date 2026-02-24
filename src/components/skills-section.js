@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import SkillCategory from "./skill-category";
-import aboutDataManager from "../lib/about-data-manager.js";
+import { motion } from 'motion/react';
+import SkillCategory from './skill-category';
+import aboutDataManager from '../lib/about-data-manager.js';
 
 export default function SkillsSection() {
   const { categories } = aboutDataManager.getSkillsData();
@@ -10,7 +10,7 @@ export default function SkillsSection() {
   return (
     <motion.section
       id="skills"
-      className="py-12 sm:py-16"
+      className="py-8 sm:py-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

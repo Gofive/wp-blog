@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import ExperienceCard from "./experience-card";
-import aboutDataManager from "../lib/about-data-manager.js";
+import { motion } from 'motion/react';
+import ExperienceCard from './experience-card';
+import aboutDataManager from '../lib/about-data-manager.js';
 
 export default function ExperienceSection() {
   const { experiences } = aboutDataManager.getExperienceData();
@@ -10,7 +10,7 @@ export default function ExperienceSection() {
   return (
     <motion.section
       id="experience"
-      className="py-12 sm:py-16"
+      className="py-8 sm:py-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

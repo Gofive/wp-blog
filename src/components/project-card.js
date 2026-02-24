@@ -1,16 +1,32 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import { Github, ExternalLink, CheckCircle2, Target } from "lucide-react";
+import { motion } from 'motion/react';
+import { Github, ExternalLink, CheckCircle2, Target } from 'lucide-react';
 
 export default function ProjectCard({ project, index }) {
-  const { title, description, responsibilities, results, technologies, links } = project;
+  const {
+    title,
+    description,
+    responsibilities,
+    results,
+    technologies,
+    links,
+    icon,
+    screenshots,
+  } = project;
   const { github, demo } = links || {};
 
   return (
     <div className="group p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm flex flex-col h-full">
       <div className="flex justify-between items-start mb-4">
-        <h3 className="text-base font-bold text-slate-900 dark:text-slate-50 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        <h3 className="text-base font-bold text-slate-900 dark:text-slate-50 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-center gap-2">
+          {icon && (
+            <img
+              src={icon}
+              alt={`${title} icon`}
+              className="w-8 h-8 rounded-md bg-white border border-slate-100"
+            />
+          )}
           {title}
         </h3>
         <div className="flex gap-2">
@@ -68,6 +84,22 @@ export default function ProjectCard({ project, index }) {
             <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
               {results}
             </p>
+          </div>
+        )}
+
+        {/* Screenshots */}
+        {screenshots && screenshots.length > 0 && (
+          <div className="mt-4 pb-2 w-full overflow-x-auto scroller">
+            <div className="flex gap-3 w-max">
+              {screenshots.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`${title} screenshot ${idx + 1}`}
+                  className="h-48 w-auto rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 object-cover hover:scale-[1.02] transition-transform cursor-pointer"
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
