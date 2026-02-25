@@ -2,7 +2,7 @@
 title: '别再用 Session 了：聊聊 JWT 跨域认证与双 Token 刷新'
 category: 'Technology'
 date: '2019-05-23'
-tags: ['安全', 'Web', '架构', 'Node.js', 'JWT']
+tags: ['Web', '架构']
 ---
 
 在当今互联网应用架构中，前后端分离和微服务化已经成为了主流。但在这种多域名、多终端（Web、iOS、Android）的复杂场景中，如果依然使用传统的基于 Session 会话的用户认证机制，开发者就会面临极度痛苦的“跨域”与“状态共享”问题。

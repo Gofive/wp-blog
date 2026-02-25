@@ -1,8 +1,8 @@
 ---
-title: '为什么大厂微服务内部都在跑 RPC？(附 Go gRPC 极简示例)'
+title: '为什么大厂微服务内部都在跑 RPC'
 category: 'Technology'
 date: '2025-11-23'
-tags: ['RPC', 'Backend', 'Architecture', 'gRPC', 'Golang']
+tags: ['RPC', '后端', '架构']
 ---
 
 在单机时代的应用程序中，我们调用一个方法（Function）或者过程（Procedure）通常是非常直观的。只要传递参数、跳转到内存中指定函数的地址执行，最后拿到返回结果即可。
