@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { ThemeToggle, ThemeSwitcher } from "./theme-switcher";
-import { FaGithub } from "react-icons/fa";
-import { Separator } from "./ui/separator";
-import OptimizedImage from "./optimized-image";
-import NavItem from "./nav-item";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import { motion } from "motion/react";
-import Link from "next/link";
-import MenuToggle from "./menu-toggle";
-import { useAtom } from "jotai";
-import { toggleMenuAtom } from "@/lib/atom-state";
-import { redirect } from "next/navigation";
+import { cn } from '@/lib/utils';
+import { ThemeToggle, ThemeSwitcher } from './theme-switcher';
+import { FaGithub } from 'react-icons/fa';
+import { Separator } from './ui/separator';
+import OptimizedImage from './optimized-image';
+import NavItem from './nav-item';
+import { Search } from 'lucide-react';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import Link from 'next/link';
+import MenuToggle from './menu-toggle';
+import { useAtom } from 'jotai';
+import { toggleMenuAtom } from '@/lib/atom-state';
+import { redirect } from 'next/navigation';
 
 const mainNav = [
   {
-    title: "Article",
-    href: "/article",
+    title: 'Article',
+    href: '/article',
   },
   {
-    title: "Projects",
-    href: "/projects",
+    title: 'Projects',
+    href: '/projects',
   },
   {
-    title: "About",
-    href: "/about",
+    title: 'About',
+    href: '/about',
   },
 ];
 
@@ -37,15 +37,15 @@ export default function MainNav({ className, ...props }) {
   const handleClick = () => {
     setOpen(!open);
     setIsOpen(false);
-    document.getElementsByTagName("body")[0].classList.toggle("mobile-menu");
+    document.getElementsByTagName('body')[0].classList.toggle('mobile-menu');
   };
 
   return (
     <>
       <div
         className={cn(
-          "sticky border-b top-0 z-50 w-full backdrop-blur-sm flex-none transition-colors duration-500 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent",
-          className
+          'sticky border-b top-0 z-50 w-full backdrop-blur-sm flex-none transition-colors duration-500 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent',
+          className,
         )}
         {...props}
       >
@@ -74,7 +74,10 @@ export default function MainNav({ className, ...props }) {
                   <nav className="h-full text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
                     <ul className="flex space-x-8 h-full">
                       {mainNav.map((item) => (
-                        <li key={item.href} className="flex h-full items-center justify-center ">
+                        <li
+                          key={item.href}
+                          className="flex h-full items-center justify-center "
+                        >
                           <NavItem item={item} />
                         </li>
                       ))}
@@ -90,6 +93,7 @@ export default function MainNav({ className, ...props }) {
                   href="https://github.com/gofive"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="GitHub Profile"
                 >
                   <FaGithub
                     className="text-slate-500 hover:text-slate-600 cursor-pointer"
@@ -103,13 +107,14 @@ export default function MainNav({ className, ...props }) {
               </div>
               <button
                 type="button"
+                aria-label="Search articles"
                 onClick={() => {
                   setIsOpen(false);
                   setOpen(false);
                   document
-                    .getElementsByTagName("body")[0]
-                    .classList.remove("mobile-menu");
-                  redirect("/search");
+                    .getElementsByTagName('body')[0]
+                    .classList.remove('mobile-menu');
+                  redirect('/search');
                 }}
                 className="cursor-pointer ml-auto md:ml-4 text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
               >

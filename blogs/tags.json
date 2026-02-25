@@ -24,6 +24,12 @@
     ]
   },
   {
+    "tag": "DevOps",
+    "articles": [
+      "Cerbot使用记录"
+    ]
+  },
+  {
     "tag": "安全",
     "articles": [
       "JWT认证方案"
@@ -40,6 +46,18 @@
     "articles": [
       "JWT认证方案",
       "秒杀场景的技术实现与架构设计"
+    ]
+  },
+  {
+    "tag": "Node.js",
+    "articles": [
+      "JWT认证方案"
+    ]
+  },
+  {
+    "tag": "JWT",
+    "articles": [
+      "JWT认证方案"
     ]
   },
   {
@@ -98,6 +116,24 @@
     ]
   },
   {
+    "tag": "Frontend",
+    "articles": [
+      "React服务端组件深度解析"
+    ]
+  },
+  {
+    "tag": "AI",
+    "articles": [
+      "使用千问实现一个书籍编校Agent"
+    ]
+  },
+  {
+    "tag": "Agent",
+    "articles": [
+      "使用千问实现一个书籍编校Agent"
+    ]
+  },
+  {
     "tag": "Java",
     "articles": [
       "应对突发流量并保证数据一致性的实践",
@@ -118,7 +154,26 @@
     ]
   },
   {
+    "tag": "架构设计",
+    "articles": [
+      "应对突发流量并保证数据一致性的实践",
+      "现代前端工程的演进与思考"
+    ]
+  },
+  {
+    "tag": "RocketMQ",
+    "articles": [
+      "应对突发流量并保证数据一致性的实践"
+    ]
+  },
+  {
     "tag": "前端",
+    "articles": [
+      "现代前端工程的演进与思考"
+    ]
+  },
+  {
+    "tag": "工程化",
     "articles": [
       "现代前端工程的演进与思考"
     ]

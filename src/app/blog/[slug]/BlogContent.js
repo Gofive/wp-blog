@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import remarkFrontmatter from "remark-frontmatter";
-import rehypeStringify from "rehype-stringify";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { materialOceanic } from "react-syntax-highlighter/dist/esm/styles/prism";
-import CopyButton from "@/components/copy-btn";
-import Article from "@/components/article";
-import { useEffect, useState, useRef } from "react";
-import mermaid from "mermaid";
-import Slugger from "github-slugger";
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import remarkFrontmatter from 'remark-frontmatter';
+import rehypeStringify from 'rehype-stringify';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { materialOceanic } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CopyButton from '@/components/copy-btn';
+import Article from '@/components/article';
+import { useEffect, useState, useRef } from 'react';
+import mermaid from 'mermaid';
+import Slugger from 'github-slugger';
 
 /**
  * 自定义 rehype 插件，生成与 TOC 一致的 ID
@@ -21,12 +21,12 @@ const rehypeCustomSlug = () => {
     const slugger = new Slugger();
 
     const visit = (node) => {
-      if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
+      if (node.type === 'element' && /^h[1-6]$/.test(node.tagName)) {
         // 提取标题文本
         const text = node.children
-          .filter((child) => child.type === "text")
+          .filter((child) => child.type === 'text')
           .map((child) => child.value)
-          .join("");
+          .join('');
 
         // 生成 slug
         let id = slugger.slug(text);
@@ -56,12 +56,12 @@ const rehypeCustomSlug = () => {
  * Renders mermaid diagrams client-side with unique IDs
  */
 const MermaidDiagram = ({ code }) => {
-  const [diagramHtml, setDiagramHtml] = useState("");
+  const [diagramHtml, setDiagramHtml] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const diagramRef = useRef(null);
   const diagramId = useRef(
-    `mermaid-${Math.random().toString(36).substring(2, 11)}`
+    `mermaid-${Math.random().toString(36).substring(2, 11)}`,
   );
 
   useEffect(() => {
@@ -70,8 +70,8 @@ const MermaidDiagram = ({ code }) => {
         // Initialize mermaid with configuration
         mermaid.initialize({
           startOnLoad: false,
-          theme: "default",
-          securityLevel: "loose",
+          theme: 'default',
+          securityLevel: 'loose',
         });
 
         // Generate unique ID for this diagram
@@ -82,7 +82,7 @@ const MermaidDiagram = ({ code }) => {
         setDiagramHtml(svg);
         setError(null);
       } catch (err) {
-        console.error("Mermaid rendering error:", err);
+        console.error('Mermaid rendering error:', err);
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -97,10 +97,10 @@ const MermaidDiagram = ({ code }) => {
       <div
         className="mermaid-loading"
         style={{
-          padding: "1rem",
-          textAlign: "center",
-          background: "#f5f5f5",
-          borderRadius: "4px",
+          padding: '1rem',
+          textAlign: 'center',
+          background: '#f5f5f5',
+          borderRadius: '4px',
         }}
       >
         Loading diagram...
@@ -113,27 +113,27 @@ const MermaidDiagram = ({ code }) => {
       <div className="mermaid-error">
         <div
           style={{
-            padding: "0.5rem",
-            background: "#fee",
-            color: "#c33",
-            borderRadius: "4px",
-            marginBottom: "0.5rem",
-            fontSize: "0.9rem",
+            padding: '0.5rem',
+            background: '#fee',
+            color: '#c33',
+            borderRadius: '4px',
+            marginBottom: '0.5rem',
+            fontSize: '0.9rem',
           }}
         >
           Mermaid rendering error: {error}
         </div>
         <pre
           style={{
-            background: "#263238",
-            color: "#eeffff",
-            padding: "1rem",
-            borderRadius: "4px",
-            overflow: "auto",
+            background: '#263238',
+            color: '#eeffff',
+            padding: '1rem',
+            borderRadius: '4px',
+            overflow: 'auto',
             fontFamily:
               "'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
-            fontSize: "0.9rem",
-            lineHeight: "1.5",
+            fontSize: '0.9rem',
+            lineHeight: '1.5',
           }}
         >
           {code}
@@ -148,11 +148,11 @@ const MermaidDiagram = ({ code }) => {
       ref={diagramRef}
       dangerouslySetInnerHTML={{ __html: diagramHtml }}
       style={{
-        textAlign: "center",
-        padding: "1rem",
-        background: "#fff",
-        borderRadius: "4px",
-        border: "1px solid #e1e5e9",
+        textAlign: 'center',
+        padding: '1rem',
+        background: '#fff',
+        borderRadius: '4px',
+        border: '1px solid #e1e5e9',
       }}
     />
   );
@@ -168,14 +168,31 @@ export default function BlogContent({ markdown, toc, title }) {
           [remarkFrontmatter],
         ]}
         components={{
+          img({ node, ...props }) {
+            return (
+              <span className="block my-8">
+                <img
+                  {...props}
+                  loading="lazy"
+                  className="rounded-lg shadow-md mx-auto max-w-full h-auto border border-gray-200 dark:border-slate-700"
+                  style={{ display: 'block' }}
+                />
+                {props.title && (
+                  <span className="block text-center text-sm text-gray-500 dark:text-gray-400 mt-2 italic">
+                    {props.title}
+                  </span>
+                )}
+              </span>
+            );
+          },
           code({ inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
-            const code = String(children).replace(/\n$/, "");
+            const match = /language-(\w+)/.exec(className || '');
+            const code = String(children).replace(/\n$/, '');
 
             // Handle mermaid blocks
-            if (!inline && match && match[1] === "mermaid") {
+            if (!inline && match && match[1] === 'mermaid') {
               return (
-                <div style={{ position: "relative" }}>
+                <div style={{ position: 'relative' }}>
                   <CopyButton code={code} />
                   <MermaidDiagram code={code} />
                 </div>
@@ -184,7 +201,7 @@ export default function BlogContent({ markdown, toc, title }) {
 
             // Handle other code blocks with syntax highlighting
             return !inline && match ? (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <CopyButton code={code} />
                 <SyntaxHighlighter
                   style={materialOceanic}
@@ -193,10 +210,10 @@ export default function BlogContent({ markdown, toc, title }) {
                   customStyle={{
                     fontFamily:
                       "'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
-                    fontSize: "0.9rem",
-                    lineHeight: "1.5",
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
                     margin: 0,
-                    padding: "1rem",
+                    padding: '1rem',
                   }}
                   {...props}
                 >
@@ -209,11 +226,11 @@ export default function BlogContent({ markdown, toc, title }) {
                 style={{
                   fontFamily:
                     "'Fira Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
-                  fontSize: "0.9em",
-                  backgroundColor: "#f6f8fa",
-                  padding: "0.2em 0.4em",
-                  borderRadius: "3px",
-                  border: "1px solid #e1e4e8",
+                  fontSize: '0.9em',
+                  backgroundColor: '#f6f8fa',
+                  padding: '0.2em 0.4em',
+                  borderRadius: '3px',
+                  border: '1px solid #e1e4e8',
                 }}
                 {...props}
               >

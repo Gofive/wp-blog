@@ -1,5 +1,9 @@
 import { projects, personalInfo } from '@/data/about-data';
-import { generateSEOMetadata } from '@/lib/seo-utils';
+import {
+  generateSEOMetadata,
+  generateProjectStructuredData,
+} from '@/lib/seo-utils';
+import Script from 'next/script';
 import {
   Github,
   ExternalLink,
@@ -24,8 +28,21 @@ export default function ProjectsPage() {
   const { title, technologies, links, icon, screenshots } = project;
   const { github, demo } = links || {};
 
+  // 生成项目结构化数据
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [generateProjectStructuredData(project)],
+  };
+
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+      <Script
+        id="projects-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       <div className="mb-12 text-center md:text-left">
         <h1 className="text-4xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
           个人产品集

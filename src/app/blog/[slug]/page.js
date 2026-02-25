@@ -1,12 +1,15 @@
-import { getBlog } from "@/lib/read-md";
-import { remark } from "remark";
-import { visit } from "unist-util-visit";
-import Slugger from "github-slugger";
-import remarkFrontmatter from "remark-frontmatter";
-import BlogContent from "./BlogContent";
-import { generateSEOMetadata, generateBlogPostingStructuredData } from "@/lib/seo-utils";
-import posts from "~/blogs/search-index.json";
-import Script from "next/script";
+import { getBlog } from '@/lib/read-md';
+import { remark } from 'remark';
+import { visit } from 'unist-util-visit';
+import Slugger from 'github-slugger';
+import remarkFrontmatter from 'remark-frontmatter';
+import BlogContent from './BlogContent';
+import {
+  generateSEOMetadata,
+  generateBlogPostingStructuredData,
+} from '@/lib/seo-utils';
+import posts from '~/blogs/search-index.json';
+import Script from 'next/script';
 
 // ISR 配置：每 3600 秒（1小时）重新验证一次页面
 export const revalidate = 3600;
@@ -25,15 +28,16 @@ export async function generateMetadata({ params }) {
   const blogData = await getBlog(`${decodedSlug}.md`);
   const title = blogData.frontmatter?.title || decodedSlug;
   const url = `https://imwind.cc/blog/${slug}`;
-  
+
   // 从 search-index.json 中查找文章信息以获取 summary
-  const postInfo = posts.find(p => p.slug === decodedSlug);
-  const description = postInfo?.summary 
+  const postInfo = posts.find((p) => p.slug === decodedSlug);
+  const description = postInfo?.summary
     ? postInfo.summary.replace(/\n/g, ' ').substring(0, 160).trim()
     : `${title} - IMWIND 技术博客文章`;
-  
+
   const tags = blogData.frontmatter?.tags || [];
-  const date = blogData.frontmatter?.date || new Date().toISOString().split('T')[0];
+  const date =
+    blogData.frontmatter?.date || new Date().toISOString().split('T')[0];
 
   return generateSEOMetadata({
     title,
@@ -55,12 +59,12 @@ export const parseMarkdownWithToc = async (markdownContent) => {
   const processor = remark()
     .use(remarkFrontmatter)
     .use(() => (tree) => {
-      visit(tree, "heading", (node) => {
+      visit(tree, 'heading', (node) => {
         const level = node.depth; // 标题层级 (h1 -> 1, h2 -> 2, etc.)
         const text = node.children
-          .filter((child) => child.type === "text")
+          .filter((child) => child.type === 'text')
           .map((child) => child.value)
-          .join("");
+          .join('');
         let id = slugger.slug(text); // 使用 github-slugger 生成 ID
         // 确保 ID 不以数字开头，HTML ID 必须以字母开头
         if (/^\d/.test(id)) {
@@ -86,15 +90,15 @@ export default async function Blog({ params }) {
   const blogData = await getBlog(`${decodedSlug}.md`);
   const title = blogData.frontmatter?.title || decodedSlug;
   const url = `https://imwind.cc/blog/${slug}`;
-  
+
   // 从 search-index.json 中查找文章信息
-  const postInfo = posts.find(p => p.slug === decodedSlug);
-  const description = postInfo?.summary 
+  const postInfo = posts.find((p) => p.slug === decodedSlug);
+  const description = postInfo?.summary
     ? postInfo.summary.replace(/\n/g, ' ').substring(0, 160).trim()
     : `${title} - IMWIND 技术博客文章`;
-  
+
   const tags = blogData.frontmatter?.tags || [];
-  const datePublished = blogData.frontmatter?.date 
+  const datePublished = blogData.frontmatter?.date
     ? new Date(blogData.frontmatter.date).toISOString()
     : new Date().toISOString();
 
@@ -102,8 +106,8 @@ export default async function Blog({ params }) {
 
   // 生成结构化数据
   const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
+    '@context': 'https://schema.org',
+    '@graph': [
       generateBlogPostingStructuredData({
         title,
         description,
@@ -111,9 +115,33 @@ export default async function Blog({ params }) {
         datePublished,
         dateModified: datePublished,
         tags,
-        image: "/iwb.png"
-      })
-    ]
+        image: '/iwb.png',
+      }),
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: '首页',
+            item: 'https://imwind.cc',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: '博客',
+            item: 'https://imwind.cc/article',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: title,
+            item: url,
+          },
+        ],
+      },
+    ],
   };
 
   return (

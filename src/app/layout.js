@@ -1,9 +1,9 @@
-import IwbTheme from "../providers/theme";
-import MainNav from "@/components/navbar";
-import Script from "next/script";
+import IwbTheme from '../providers/theme';
+import MainNav from '@/components/navbar';
+import Script from 'next/script';
 
-import "./globals.css";
-import UpTop from "@/components/up-top";
+import './globals.css';
+import UpTop from '@/components/up-top';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({
@@ -14,36 +14,36 @@ const inter = Inter({
 
 export const metadata = {
   title: {
-    default: "IMWIND - 全栈开发工程师 | 技术博客",
-    template: "%s | IMWIND",
+    default: 'IMWIND - 全栈开发工程师 | 技术博客',
+    template: '%s | IMWIND',
   },
   description:
-    "IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。专注于 React、Next.js、Node.js 等现代 Web 开发技术。",
+    'IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。专注于 React、Next.js、Node.js 等现代 Web 开发技术。',
   keywords: [
-    "IMWIND",
-    "全栈开发",
-    "前端开发",
-    "后端开发",
-    "React",
-    "Next.js",
-    "Node.js",
-    "JavaScript",
-    "TypeScript",
-    "技术博客",
-    "Web开发",
-    "软件工程师",
-  ].join(", "),
-  authors: [{ name: "IMWIND", url: "https://imwind.cc" }],
-  creator: "IMWIND",
-  publisher: "IMWIND",
+    'IMWIND',
+    '全栈开发',
+    '前端开发',
+    '后端开发',
+    'React',
+    'Next.js',
+    'Node.js',
+    'JavaScript',
+    'TypeScript',
+    '技术博客',
+    'Web开发',
+    '软件工程师',
+  ].join(', '),
+  authors: [{ name: 'IMWIND', url: 'https://imwind.cc' }],
+  creator: 'IMWIND',
+  publisher: 'IMWIND',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://imwind.cc"),
+  metadataBase: new URL('https://imwind.cc'),
   alternates: {
-    canonical: "/",
+    canonical: '/',
   },
   robots: {
     index: true,
@@ -51,41 +51,56 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   openGraph: {
-    type: "website",
-    locale: "zh_CN",
-    url: "https://imwind.cc",
-    siteName: "IMWIND",
-    title: "IMWIND - 全栈开发工程师 | 技术博客",
+    type: 'website',
+    locale: 'zh_CN',
+    url: 'https://imwind.cc',
+    siteName: 'IMWIND',
+    title: 'IMWIND - 全栈开发工程师 | 技术博客',
     description:
-      "IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。",
+      'IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。',
     images: [
       {
-        url: "/iwb.png",
+        url: '/iwb.png',
         width: 400,
         height: 400,
-        alt: "IMWIND Logo",
+        alt: 'IMWIND Logo',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "IMWIND - 全栈开发工程师 | 技术博客",
+    card: 'summary_large_image',
+    title: 'IMWIND - 全栈开发工程师 | 技术博客',
     description:
-      "IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。",
-    site: "@imwind_dev",
-    creator: "@imwind_dev",
-    images: ["/iwb.png"],
+      'IMWIND 的个人网站，分享前端、后端开发技术文章，展示项目作品和技术经验。',
+    site: '@imwind_dev',
+    creator: '@imwind_dev',
+    images: ['/iwb.png'],
   },
   verification: {
-    google: "G-SDZFGG4YWC",
+    google: 'G-SDZFGG4YWC',
   },
-  category: "Technology",
+  category: 'Technology',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'IMWIND',
+  },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#1e293b' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }) {
@@ -110,7 +125,10 @@ export default function RootLayout({ children }) {
         <IwbTheme>
           <div className="flex flex-col h-full">
             <MainNav />
-            <main id="main-content" className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth">
+            <main
+              id="main-content"
+              className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth"
+            >
               <div className="container max-w-5xl">{children}</div>
             </main>
           </div>
