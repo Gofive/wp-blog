@@ -3,7 +3,7 @@
  * Provides functions for generating structured data and SEO metadata
  */
 
-import { personalInfo, siteConfig, experiences } from "@/data/about-data";
+import { personalInfo, siteConfig, experiences } from '@/data/about-data';
 
 /**
  * Generate Person structured data for about page
@@ -12,65 +12,65 @@ export function generatePersonStructuredData() {
   const baseUrl = siteConfig.url;
 
   return {
-    "@type": "Person",
-    "@id": `${baseUrl}/about#person`,
+    '@type': 'Person',
+    '@id': `${baseUrl}/about#person`,
     name: personalInfo.name,
     alternateName: personalInfo.name,
     description: personalInfo.bio.primary,
     url: `${baseUrl}/about`,
     image: {
-      "@type": "ImageObject",
+      '@type': 'ImageObject',
       url: `${baseUrl}${personalInfo.avatar.src}`,
       width: 400,
       height: 400,
-      caption: personalInfo.avatar.alt
+      caption: personalInfo.avatar.alt,
     },
     jobTitle: personalInfo.title,
     worksFor: {
-      "@type": "Organization",
-      name: experiences[0]?.company || "科技创新公司"
+      '@type': 'Organization',
+      name: experiences[0]?.company || '科技创新公司',
     },
     address: {
-      "@type": "PostalAddress",
-      addressCountry: "CN",
-      addressRegion: personalInfo.location
+      '@type': 'PostalAddress',
+      addressCountry: 'CN',
+      addressRegion: personalInfo.location,
     },
     sameAs: [
-      "https://github.com/gofive",
-      "https://twitter.com/imwind_dev",
-      "https://linkedin.com/in/imwind"
+      'https://github.com/gofive',
+      'https://twitter.com/imwind_dev',
+      'https://linkedin.com/in/imwind',
     ],
     knowsAbout: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Node.js",
-      "Full Stack Development",
-      "Web Development",
-      "Software Engineering",
-      "PostgreSQL",
-      "MongoDB"
+      'JavaScript',
+      'TypeScript',
+      'React',
+      'Next.js',
+      'Node.js',
+      'Full Stack Development',
+      'Web Development',
+      'Software Engineering',
+      'PostgreSQL',
+      'MongoDB',
     ],
     hasOccupation: {
-      "@type": "Occupation",
-      name: "全栈开发工程师",
+      '@type': 'Occupation',
+      name: '全栈开发工程师',
       occupationLocation: {
-        "@type": "Country",
-        name: "China"
+        '@type': 'Country',
+        name: 'China',
       },
       skills: [
-        "React",
-        "Next.js",
-        "Node.js",
-        "TypeScript",
-        "JavaScript",
-        "PostgreSQL",
-        "MongoDB",
-        "Vue.js",
-        "Python"
-      ]
-    }
+        'React',
+        'Next.js',
+        'Node.js',
+        'TypeScript',
+        'JavaScript',
+        'PostgreSQL',
+        'MongoDB',
+        'Vue.js',
+        'Python',
+      ],
+    },
   };
 }
 
@@ -81,63 +81,69 @@ export function generateWebSiteStructuredData() {
   const baseUrl = siteConfig.url;
 
   return {
-    "@type": "WebSite",
-    "@id": `${baseUrl}#website`,
+    '@type': 'WebSite',
+    '@id': `${baseUrl}#website`,
     name: siteConfig.name,
     url: baseUrl,
     description: siteConfig.description,
-    inLanguage: "zh-CN",
+    inLanguage: 'zh-CN',
     publisher: {
-      "@id": `${baseUrl}/about#person`
+      '@id': `${baseUrl}/about#person`,
     },
     potentialAction: {
-      "@type": "SearchAction",
+      '@type': 'SearchAction',
       target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/search?q={search_term_string}`
+        '@type': 'EntryPoint',
+        urlTemplate: `${baseUrl}/search?q={search_term_string}`,
       },
-      "query-input": "required name=search_term_string"
-    }
+      'query-input': 'required name=search_term_string',
+    },
   };
 }
 
 /**
  * Generate WebPage structured data
  */
-export function generateWebPageStructuredData(pageUrl, title, description, breadcrumbs = [], includeBreadcrumbs = false) {
+export function generateWebPageStructuredData(
+  pageUrl,
+  title,
+  description,
+  breadcrumbs = [],
+  includeBreadcrumbs = false,
+) {
   const baseUrl = siteConfig.url;
 
   const webPageData = {
-    "@type": "WebPage",
-    "@id": `${pageUrl}#webpage`,
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
     url: pageUrl,
     name: title,
     description: description,
-    inLanguage: "zh-CN",
+    inLanguage: 'zh-CN',
     isPartOf: {
-      "@type": "WebSite",
-      "@id": `${baseUrl}#website`
-    }
+      '@type': 'WebSite',
+      '@id': `${baseUrl}#website`,
+    },
   };
 
   // Only include breadcrumbs if explicitly requested
   if (includeBreadcrumbs && breadcrumbs.length > 0) {
     const breadcrumbList = {
-      "@type": "BreadcrumbList",
+      '@type': 'BreadcrumbList',
       itemListElement: [
         {
-          "@type": "ListItem",
+          '@type': 'ListItem',
           position: 1,
-          name: "首页",
-          item: baseUrl
+          name: '首页',
+          item: baseUrl,
         },
         ...breadcrumbs.map((crumb, index) => ({
-          "@type": "ListItem",
+          '@type': 'ListItem',
           position: index + 2,
           name: crumb.name,
-          item: crumb.url
-        }))
-      ]
+          item: crumb.url,
+        })),
+      ],
     };
     webPageData.breadcrumb = breadcrumbList;
   }
@@ -152,15 +158,15 @@ export function generateProfilePageStructuredData() {
   const baseUrl = siteConfig.url;
 
   return {
-    "@type": "ProfilePage",
-    "@id": `${baseUrl}/about#profilepage`,
+    '@type': 'ProfilePage',
+    '@id': `${baseUrl}/about#profilepage`,
     url: `${baseUrl}/about`,
     name: `${personalInfo.name} - 个人简历`,
     description: `${personalInfo.name}的个人简历页面，包含技能、工作经历、项目作品和联系方式`,
-    inLanguage: "zh-CN",
+    inLanguage: 'zh-CN',
     mainEntity: {
-      "@id": `${baseUrl}/about#person`
-    }
+      '@id': `${baseUrl}/about#person`,
+    },
   };
 }
 
@@ -171,19 +177,19 @@ export function generateAboutPageStructuredData() {
   const baseUrl = siteConfig.url;
 
   return {
-    "@context": "https://schema.org",
-    "@graph": [
+    '@context': 'https://schema.org',
+    '@graph': [
       generatePersonStructuredData(),
       generateWebPageStructuredData(
         `${baseUrl}/about`,
         `关于 ${personalInfo.name} - ${personalInfo.title}`,
         personalInfo.bio.primary,
         [],
-        false
+        false,
       ),
       generateWebSiteStructuredData(),
-      generateProfilePageStructuredData()
-    ]
+      generateProfilePageStructuredData(),
+    ],
   };
 }
 
@@ -192,16 +198,16 @@ export function generateAboutPageStructuredData() {
  */
 export function generateOrganizationStructuredData(experience) {
   return {
-    "@type": "Organization",
+    '@type': 'Organization',
     name: experience.company,
     description: `${personalInfo.name} 在 ${experience.company} 担任 ${experience.position}`,
     employee: {
-      "@type": "Person",
+      '@type': 'Person',
       name: personalInfo.name,
       jobTitle: experience.position,
       startDate: experience.startDate,
-      endDate: experience.endDate
-    }
+      endDate: experience.endDate,
+    },
   };
 }
 
@@ -212,22 +218,22 @@ export function generateProjectStructuredData(project) {
   const baseUrl = siteConfig.url;
 
   return {
-    "@type": "SoftwareApplication",
+    '@type': 'SoftwareApplication',
     name: project.title,
     description: project.description,
-    applicationCategory: "WebApplication",
-    operatingSystem: "Web Browser",
+    applicationCategory: 'WebApplication',
+    operatingSystem: 'Web Browser',
     author: {
-      "@type": "Person",
+      '@type': 'Person',
       name: personalInfo.name,
-      url: `${baseUrl}/about`
+      url: `${baseUrl}/about`,
     },
     programmingLanguage: project.technologies,
     codeRepository: project.links?.github,
     url: project.links?.demo,
     image: project.image ? `${baseUrl}${project.image}` : undefined,
     dateCreated: project.startDate,
-    dateModified: project.endDate || new Date().toISOString().split('T')[0]
+    dateModified: project.endDate || new Date().toISOString().split('T')[0],
   };
 }
 
@@ -236,33 +242,33 @@ export function generateProjectStructuredData(project) {
  */
 export function generateFAQStructuredData() {
   return {
-    "@type": "FAQPage",
+    '@type': 'FAQPage',
     mainEntity: [
       {
-        "@type": "Question",
-        name: "IMWIND 是谁？",
+        '@type': 'Question',
+        name: 'IMWIND 是谁？',
         acceptedAnswer: {
-          "@type": "Answer",
-          text: `${personalInfo.name} 是一名${personalInfo.title}，${personalInfo.bio.primary}`
-        }
+          '@type': 'Answer',
+          text: `${personalInfo.name} 是一名${personalInfo.title}，${personalInfo.bio.primary}`,
+        },
       },
       {
-        "@type": "Question",
-        name: "IMWIND 擅长什么技术？",
+        '@type': 'Question',
+        name: 'IMWIND 擅长什么技术？',
         acceptedAnswer: {
-          "@type": "Answer",
-          text: "主要技术栈包括 React、Next.js、Node.js、TypeScript、JavaScript、PostgreSQL、MongoDB 等现代 Web 开发技术。"
-        }
+          '@type': 'Answer',
+          text: '主要技术栈包括 React、Next.js、Node.js、TypeScript、JavaScript、PostgreSQL、MongoDB 等现代 Web 开发技术。',
+        },
       },
       {
-        "@type": "Question",
-        name: "如何联系 IMWIND？",
+        '@type': 'Question',
+        name: '如何联系 IMWIND？',
         acceptedAnswer: {
-          "@type": "Answer",
-          text: "可以通过邮箱 contact@imwind.cc、GitHub (github.com/gofive) 或 LinkedIn 联系我。"
-        }
-      }
-    ]
+          '@type': 'Answer',
+          text: '可以通过邮箱 contact@imwind.cc、GitHub (github.com/gofive) 或 LinkedIn 联系我。',
+        },
+      },
+    ],
   };
 }
 
@@ -279,10 +285,11 @@ export function generateSEOMetadata({
   publishedTime,
   modifiedTime,
   authors,
-  section
+  section,
 }) {
   const baseUrl = siteConfig.url;
-  const fullUrl = `${baseUrl}${path}`;
+  const encodedPath = path.startsWith('http') ? path : encodeURI(path);
+  const fullUrl = path.startsWith('http') ? path : `${baseUrl}${encodedPath}`;
   const fullTitle = title.includes('IMWIND') ? title : `${title} | IMWIND`;
 
   const defaultKeywords = [
@@ -294,7 +301,7 @@ export function generateSEOMetadata({
     'Next.js',
     'Node.js',
     'JavaScript',
-    'TypeScript'
+    'TypeScript',
   ];
 
   const metadata = {
@@ -356,7 +363,7 @@ export function generateSEOMetadata({
       metadata.openGraph.section = section;
     }
     if (authors && authors.length > 0) {
-      metadata.openGraph.authors = authors.map(a => a.name || a);
+      metadata.openGraph.authors = authors.map((a) => a.name || a);
     }
   }
 
@@ -374,42 +381,42 @@ export function generateBlogPostingStructuredData({
   dateModified,
   author = personalInfo.name,
   tags = [],
-  image
+  image,
 }) {
   const baseUrl = siteConfig.url;
 
   return {
-    "@type": "BlogPosting",
-    "@id": `${url}#blogposting`,
+    '@type': 'BlogPosting',
+    '@id': `${url}#blogposting`,
     headline: title,
     description: description,
     url: url,
     datePublished: datePublished,
     dateModified: dateModified || datePublished,
     author: {
-      "@type": "Person",
-      "@id": `${baseUrl}/about#person`,
+      '@type': 'Person',
+      '@id': `${baseUrl}/about#person`,
       name: author,
-      url: `${baseUrl}/about`
+      url: `${baseUrl}/about`,
     },
     publisher: {
-      "@id": `${baseUrl}#website`
+      '@id': `${baseUrl}#website`,
     },
     mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": url
+      '@type': 'WebPage',
+      '@id': url,
     },
     keywords: tags.join(', '),
-    articleSection: "Technology",
-    inLanguage: "zh-CN",
+    articleSection: 'Technology',
+    inLanguage: 'zh-CN',
     ...(image && {
       image: {
-        "@type": "ImageObject",
+        '@type': 'ImageObject',
         url: image.startsWith('http') ? image : `${baseUrl}${image}`,
         width: 1200,
-        height: 630
-      }
-    })
+        height: 630,
+      },
+    }),
   };
 }
 
@@ -423,7 +430,7 @@ const seoUtils = {
   generateProjectStructuredData,
   generateFAQStructuredData,
   generateSEOMetadata,
-  generateBlogPostingStructuredData
+  generateBlogPostingStructuredData,
 };
 
 export default seoUtils;
